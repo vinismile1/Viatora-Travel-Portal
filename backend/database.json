@@ -6,11 +6,24 @@
       "email": "snehamishra0013@gmail.com",
       "passwordHash": "15e2b0d3c33891ebb0f1ef609ec419420c20e320ce94c65fbc8c3312448eb225",
       "createdAt": "2026-07-20T04:11:54.826Z"
+    },
+    {
+      "id": "usr_1784544462783",
+      "name": "smita",
+      "email": "smitamishra0013@gmail.com",
+      "passwordHash": "c775e7b757ede630cd0aa1113bd102661ab38829ca52a6422ab782862f268646",
+      "createdAt": "2026-07-20T10:47:42.783Z"
     }
   ],
   "userPreferences": [
     {
       "userId": "usr_1784520714826",
+      "preferredStyle": "adventure",
+      "dietary": [],
+      "interests": []
+    },
+    {
+      "userId": "usr_1784544462783",
       "preferredStyle": "adventure",
       "dietary": [],
       "interests": []
@@ -296,6 +309,15 @@
       "type": "update",
       "read": true,
       "createdAt": "2026-07-20T04:11:54.828Z"
+    },
+    {
+      "id": "notif_1784544462784_b9yda",
+      "userId": "usr_1784544462783",
+      "title": "Welcome to Viatora!",
+      "message": "Hello smita, welcome to Viatora! Try searching for destinations or chatting with our AI to plan your next trip!",
+      "type": "update",
+      "read": false,
+      "createdAt": "2026-07-20T10:47:42.784Z"
     }
   ],
   "aiConversations": [],
