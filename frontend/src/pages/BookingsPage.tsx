@@ -14,21 +14,21 @@ export function BookingsPage() {
       
       {/* Intro Header */}
       <div className="mb-8">
-        <h1 className="font-display font-extrabold text-2xl md:text-3xl text-white tracking-tight">
+        <h1 className="font-display font-extrabold text-2xl md:text-3xl text-theme-text tracking-tight">
           Reservations & Bookings
         </h1>
-        <p className="text-zinc-400 text-xs md:text-sm mt-1">
+        <p className="text-theme-muted text-xs md:text-sm mt-1">
           Review details for your active flights, secure hotel bookings, and confirmed sightseeing admission tickets.
         </p>
       </div>
 
       {bookings.length === 0 ? (
-        <div className="bg-zinc-900/40 border border-white/10 rounded-[2.5rem] p-12 text-center text-zinc-500 shadow-2xl">
-          <div className="w-14 h-14 bg-zinc-950 rounded-2xl flex items-center justify-center text-zinc-400 mx-auto mb-4 border border-white/10">
+        <div className="bg-theme-card border border-theme-border rounded-[2.5rem] p-12 text-center text-theme-muted shadow-2xl">
+          <div className="w-14 h-14 bg-theme-panel rounded-2xl flex items-center justify-center text-theme-muted mx-auto mb-4 border border-theme-border">
             <Calendar size={24} />
           </div>
-          <h3 className="font-display font-bold text-zinc-300 text-sm md:text-base mb-1">No Active Reservations</h3>
-          <p className="text-xs max-w-xs mx-auto leading-relaxed text-zinc-400">
+          <h3 className="font-display font-bold text-theme-text text-sm md:text-base mb-1">No Active Reservations</h3>
+          <p className="text-xs max-w-xs mx-auto leading-relaxed text-theme-muted">
             Discover Kyoto traditional ryokans, secure table slots in Amalfi, or book Louvre entrance passes in our Home feeds!
           </p>
         </div>
@@ -38,7 +38,7 @@ export function BookingsPage() {
           {/* Active Reservations */}
           {activeBookings.length > 0 && (
             <div>
-              <h2 className="text-xs font-bold text-zinc-500 mb-4 uppercase tracking-wider">Active Reservations ({activeBookings.length})</h2>
+              <h2 className="text-xs font-bold text-theme-muted mb-4 uppercase tracking-wider">Active Reservations ({activeBookings.length})</h2>
               <div className="space-y-4">
                 {activeBookings.map((booking) => (
                   <BookingCard key={booking.id} booking={booking} />
@@ -49,8 +49,8 @@ export function BookingsPage() {
 
           {/* Cancelled History */}
           {cancelledBookings.length > 0 && (
-            <div className="pt-4 border-t border-white/10">
-              <h2 className="text-xs font-bold text-zinc-500 mb-4 uppercase tracking-wider">Cancellation History ({cancelledBookings.length})</h2>
+            <div className="pt-4 border-t border-theme-border">
+              <h2 className="text-xs font-bold text-theme-muted mb-4 uppercase tracking-wider">Cancellation History ({cancelledBookings.length})</h2>
               <div className="space-y-4 opacity-60">
                 {cancelledBookings.map((booking) => (
                   <BookingCard key={booking.id} booking={booking} />

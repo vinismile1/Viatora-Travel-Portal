@@ -63,6 +63,10 @@ interface AppContextType {
   // AI Chat
   sendAIChat: (message: string, conversationId?: string) => Promise<{ text: string; conversationId: string }>;
   getAIConversations: () => Promise<AIConversation[]>;
+
+  // Theme
+  theme: 'dark' | 'light';
+  toggleTheme: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -86,6 +90,22 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [activeTab, setActiveTab] = useState<'home' | 'bookings' | 'trips' | 'saved' | 'profile'>('home');
   const [activeMode, setActiveMode] = useState<'all' | 'travel' | 'food' | 'explore' | 'guide'>('all');
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Theme State
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    return (localStorage.getItem('viatora_theme') as 'dark' | 'light') || 'dark';
+  });
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(theme);
+    localStorage.setItem('viatora_theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+  };
 
   // Fetch static directories on mount
   useEffect(() => {
@@ -477,8 +497,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     <AppContext.Provider value={{
       user, token, preferences, destinations, hotels, restaurants, attractions,
       trips, bookings, savedPlaces, notifications, expenses, loading,
-      activeTab, activeMode, searchQuery,
-      setActiveTab, setActiveMode, setSearchQuery,
+      activeTab, activeMode, searchQuery, theme,
+      setActiveTab, setActiveMode, setSearchQuery, toggleTheme,
       register, login, logout, updatePrefs,
       fetchTrips, createTrip, deleteTrip, fetchTripItems, addTripItem, deleteTripItem, toggleTripItem, generateAIItinerary,
       fetchBookings, createBooking, cancelBooking,

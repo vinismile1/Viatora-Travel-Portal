@@ -84,11 +84,11 @@ export function TripCard({ trip }: TripCardProps) {
   }, {} as Record<string, TripItem[]>);
 
   return (
-    <div id={`trip_card_${trip.id}`} className="bg-zinc-900/40 rounded-[2rem] border border-white/10 shadow-2xl overflow-hidden hover:border-white/20 transition duration-300">
+    <div id={`trip_card_${trip.id}`} className="bg-theme-card rounded-[2rem] border border-theme-border shadow-2xl overflow-hidden hover:border-primary/30 transition duration-300">
       {/* Header Info */}
       <div className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-start gap-4">
-          <div className="w-16 h-16 rounded-xl overflow-hidden bg-zinc-950 flex-shrink-0 border border-white/10">
+          <div className="w-16 h-16 rounded-xl overflow-hidden bg-theme-panel flex-shrink-0 border border-theme-border">
             <img
               src={trip.destination?.image || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=150&q=80'}
               alt={trip.title}
@@ -101,13 +101,13 @@ export function TripCard({ trip }: TripCardProps) {
               <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold border uppercase ${statusColors[trip.status]}`}>
                 {trip.status}
               </span>
-              <span className="text-xs text-zinc-500 font-sans flex items-center gap-1">
+              <span className="text-xs text-theme-muted font-sans flex items-center gap-1">
                 <MapPin size={11} />
                 {trip.destination?.name || 'Personal Location'}
               </span>
             </div>
-            <h3 className="font-display font-semibold text-white text-base md:text-lg">{trip.title}</h3>
-            <p className="text-zinc-400 text-xs flex items-center gap-1.5 mt-0.5">
+            <h3 className="font-display font-semibold text-theme-text text-base md:text-lg">{trip.title}</h3>
+            <p className="text-theme-muted text-xs flex items-center gap-1.5 mt-0.5">
               <Calendar size={12} />
               <span>{trip.startDate} to {trip.endDate}</span>
             </p>
@@ -118,7 +118,7 @@ export function TripCard({ trip }: TripCardProps) {
           <button
             id={`delete_trip_btn_${trip.id}`}
             onClick={() => deleteTrip(trip.id)}
-            className="p-2.5 text-zinc-500 hover:text-rose-400 hover:bg-rose-500/10 rounded-xl transition cursor-pointer"
+            className="p-2.5 text-theme-muted hover:text-rose-400 hover:bg-rose-500/10 rounded-xl transition cursor-pointer"
             title="Delete Trip"
           >
             <Trash2 size={16} />
@@ -127,7 +127,7 @@ export function TripCard({ trip }: TripCardProps) {
           <button
             id={`toggle_trip_expand_btn_${trip.id}`}
             onClick={() => setExpanded(!expanded)}
-            className="flex items-center gap-1.5 px-4 py-2.5 bg-zinc-900 hover:bg-zinc-850 border border-white/5 text-zinc-300 text-xs font-semibold rounded-xl transition cursor-pointer"
+            className="flex items-center gap-1.5 px-4 py-2.5 bg-theme-panel hover:bg-theme-panel/85 border border-theme-border text-theme-text text-xs font-semibold rounded-xl transition cursor-pointer"
           >
             <span>{expanded ? 'Hide Itinerary' : 'View Itinerary'}</span>
             {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -137,16 +137,16 @@ export function TripCard({ trip }: TripCardProps) {
 
       {/* Expanded Day-By-Day Itinerary Planner */}
       {expanded && (
-        <div className="bg-[#0a0a0a] border-t border-white/10 p-6 animate-in slide-in-from-top-3 duration-200">
+        <div className="bg-theme-panel border-t border-theme-border p-6 animate-in slide-in-from-top-3 duration-200">
           <div className="flex justify-between items-center mb-6">
-            <h4 className="font-display font-semibold text-white text-sm md:text-base flex items-center gap-2">
+            <h4 className="font-display font-semibold text-theme-text text-sm md:text-base flex items-center gap-2">
               <CheckSquare size={16} className="text-primary" />
               <span>Daily Travel Plan & Checklist</span>
             </h4>
             <button
               id={`toggle_add_item_form_btn_${trip.id}`}
               onClick={() => setShowAddForm(!showAddForm)}
-              className="flex items-center gap-1 text-xs font-semibold text-primary hover:text-indigo-400 bg-zinc-900 border border-white/5 px-3 py-1.5 rounded-lg shadow-sm hover:shadow transition cursor-pointer"
+              className="flex items-center gap-1 text-xs font-semibold text-primary hover:text-indigo-400 bg-theme-card border border-theme-border px-3 py-1.5 rounded-lg shadow-sm hover:shadow transition cursor-pointer"
             >
               <Plus size={14} />
               <span>{showAddForm ? 'Close Editor' : 'Add Activity'}</span>
@@ -155,10 +155,10 @@ export function TripCard({ trip }: TripCardProps) {
 
           {/* Add custom activity editor form */}
           {showAddForm && (
-            <form onSubmit={handleAddItem} className="bg-zinc-950 border border-white/10 rounded-2xl p-4 mb-6 space-y-3.5 shadow-xl text-zinc-200">
+            <form onSubmit={handleAddItem} className="bg-theme-card border border-theme-border rounded-2xl p-4 mb-6 space-y-3.5 shadow-xl text-theme-text">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[10px] font-semibold text-zinc-500 mb-1">ACTIVITY TITLE</label>
+                  <label className="block text-[10px] font-semibold text-theme-muted mb-1">ACTIVITY TITLE</label>
                   <input
                     id="new_item_title"
                     type="text"
@@ -166,39 +166,39 @@ export function TripCard({ trip }: TripCardProps) {
                     placeholder="e.g. Sunrise tour, Wine tasting, Flight to..."
                     value={newItemTitle}
                     onChange={(e) => setNewItemTitle(e.target.value)}
-                    className="w-full px-3 py-2 bg-zinc-900 border border-white/10 rounded-lg text-xs outline-none focus:border-primary focus:bg-zinc-850 text-zinc-100"
+                    className="w-full px-3 py-2 bg-theme-panel border border-theme-border rounded-lg text-xs outline-none focus:border-primary text-theme-text"
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-semibold text-zinc-500 mb-1">CATEGORY</label>
+                  <label className="block text-[10px] font-semibold text-theme-muted mb-1">CATEGORY</label>
                   <select
                     id="new_item_type"
                     value={newItemType}
                     onChange={(e: any) => setNewItemType(e.target.value)}
-                    className="w-full px-3 py-2 bg-zinc-900 border border-white/10 rounded-lg text-xs outline-none focus:border-primary text-zinc-300"
+                    className="w-full px-3 py-2 bg-theme-panel border border-theme-border rounded-lg text-xs outline-none focus:border-primary text-theme-text cursor-pointer"
                   >
-                    <option value="activity" className="bg-zinc-950">Activity / Tour</option>
-                    <option value="hotel" className="bg-zinc-950">Hotel / Accommodation</option>
-                    <option value="restaurant" className="bg-zinc-950">Food / Restaurant</option>
-                    <option value="transport" className="bg-zinc-950">Transit / Flight / Train</option>
+                    <option value="activity" className="bg-theme-card text-theme-text">Activity / Tour</option>
+                    <option value="hotel" className="bg-theme-card text-theme-text">Hotel / Accommodation</option>
+                    <option value="restaurant" className="bg-theme-card text-theme-text">Food / Restaurant</option>
+                    <option value="transport" className="bg-theme-card text-theme-text">Transit / Flight / Train</option>
                   </select>
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-2">
                 <div>
-                  <label className="block text-[10px] font-semibold text-zinc-500 mb-1">DATE</label>
+                  <label className="block text-[10px] font-semibold text-theme-muted mb-1">DATE</label>
                   <input
                     id="new_item_date"
                     type="date"
                     required
                     value={newItemDate}
                     onChange={(e) => setNewItemDate(e.target.value)}
-                    className="w-full px-2 py-2 bg-zinc-900 border border-white/10 rounded-lg text-xs outline-none text-zinc-300"
+                    className="w-full px-2 py-2 bg-theme-panel border border-theme-border rounded-lg text-xs outline-none text-theme-text cursor-pointer"
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-semibold text-zinc-500 mb-1">TIME</label>
+                  <label className="block text-[10px] font-semibold text-theme-muted mb-1">TIME</label>
                   <input
                     id="new_item_time"
                     type="text"
@@ -206,30 +206,30 @@ export function TripCard({ trip }: TripCardProps) {
                     placeholder="e.g. 09:30"
                     value={newItemTime}
                     onChange={(e) => setNewItemTime(e.target.value)}
-                    className="w-full px-2 py-2 bg-zinc-900 border border-white/10 rounded-lg text-xs outline-none focus:border-primary focus:bg-zinc-850 text-zinc-100"
+                    className="w-full px-2 py-2 bg-theme-panel border border-theme-border rounded-lg text-xs outline-none focus:border-primary text-theme-text"
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-semibold text-zinc-500 mb-1">PRICE ($)</label>
+                  <label className="block text-[10px] font-semibold text-theme-muted mb-1">PRICE ($)</label>
                   <input
                     id="new_item_price"
                     type="number"
                     placeholder="0"
                     value={newItemPrice}
                     onChange={(e) => setNewItemPrice(e.target.value)}
-                    className="w-full px-2 py-2 bg-zinc-900 border border-white/10 rounded-lg text-xs outline-none focus:border-primary focus:bg-zinc-850 text-zinc-100"
+                    className="w-full px-2 py-2 bg-theme-panel border border-theme-border rounded-lg text-xs outline-none focus:border-primary text-theme-text"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-[10px] font-semibold text-zinc-500 mb-1">DESCRIPTION (OPTIONAL)</label>
+                <label className="block text-[10px] font-semibold text-theme-muted mb-1">DESCRIPTION (OPTIONAL)</label>
                 <textarea
                   id="new_item_desc"
                   placeholder="Additional details, tickets references or addresses..."
                   value={newItemDesc}
                   onChange={(e) => setNewItemDesc(e.target.value)}
-                  className="w-full px-3 py-2 bg-zinc-900 border border-white/10 rounded-lg text-xs outline-none focus:border-primary focus:bg-zinc-850 text-zinc-100 h-14 resize-none"
+                  className="w-full px-3 py-2 bg-theme-panel border border-theme-border rounded-lg text-xs outline-none focus:border-primary text-theme-text h-14 resize-none"
                 />
               </div>
 
@@ -247,17 +247,17 @@ export function TripCard({ trip }: TripCardProps) {
 
           {/* Main timeline schedule */}
           {items.length === 0 ? (
-            <div className="bg-zinc-950/40 border border-white/5 rounded-2xl p-6 text-center text-zinc-500 text-xs">
-              <p className="mb-2 font-medium text-zinc-400">Your itinerary is empty.</p>
+            <div className="bg-theme-card border border-theme-border rounded-2xl p-6 text-center text-theme-muted text-xs">
+              <p className="mb-2 font-medium text-theme-text">Your itinerary is empty.</p>
               <p>Add custom events above or let Gemini construct a daily plan instantly!</p>
             </div>
           ) : (
             <div className="space-y-6">
               {Object.entries(groupedItems).map(([date, dateItems]) => (
-                <div key={date} className="relative pl-4 border-l-2 border-white/10">
+                <div key={date} className="relative pl-4 border-l-2 border-theme-border">
                   {/* Date marker */}
-                  <div className="absolute -left-[7px] top-0 w-3 h-3 rounded-full bg-primary border-2 border-zinc-950"></div>
-                  <h5 className="text-xs font-bold text-zinc-300 mb-3 ml-2 uppercase tracking-wider bg-zinc-900 py-0.5 px-2 inline-block rounded-md border border-white/10">
+                  <div className="absolute -left-[7px] top-0 w-3 h-3 rounded-full bg-primary border-2 border-theme-card"></div>
+                  <h5 className="text-xs font-bold text-theme-text mb-3 ml-2 uppercase tracking-wider bg-theme-card py-0.5 px-2 inline-block rounded-md border border-theme-border">
                     {new Date(date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
                   </h5>
 
@@ -275,7 +275,7 @@ export function TripCard({ trip }: TripCardProps) {
                         <div
                           id={`itinerary_item_${item.id}`}
                           key={item.id}
-                          className={`flex items-start justify-between bg-zinc-950/50 border border-white/5 rounded-xl p-3.5 shadow-sm hover:border-white/15 transition-colors ${item.completed ? 'opacity-50' : ''}`}
+                          className={`flex items-start justify-between bg-theme-card border border-theme-border rounded-xl p-3.5 shadow-sm hover:border-primary/30 transition-colors ${item.completed ? 'opacity-50' : ''}`}
                         >
                           <div className="flex items-start gap-3">
                             <input
@@ -283,30 +283,30 @@ export function TripCard({ trip }: TripCardProps) {
                               type="checkbox"
                               checked={item.completed}
                               onChange={() => handleToggleItem(item.id)}
-                              className="mt-1 w-4 h-4 rounded border-white/15 text-primary focus:ring-primary focus:ring-1"
+                              className="mt-1 w-4 h-4 rounded border-theme-border text-primary focus:ring-primary focus:ring-1 cursor-pointer bg-theme-panel"
                             />
                             <div>
                               <div className="flex items-center gap-1.5 flex-wrap">
                                 <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 border rounded-full ${typeColors[item.type]}`}>
-                                  {item.type}
+                                    {item.type}
                                 </span>
-                                <span className="text-[11px] text-zinc-500 font-mono flex items-center gap-0.5">
+                                <span className="text-[11px] text-theme-muted font-mono flex items-center gap-0.5">
                                   <Clock size={10} />
                                   {item.time}
                                 </span>
                               </div>
-                              <h6 className={`font-medium text-xs md:text-sm mt-1 text-zinc-200 ${item.completed ? 'line-through text-zinc-500' : ''}`}>
+                              <h6 className={`font-medium text-xs md:text-sm mt-1 text-theme-text ${item.completed ? 'line-through text-theme-muted' : ''}`}>
                                 {item.title}
                               </h6>
                               {item.description && (
-                                <p className="text-zinc-400 text-[10px] md:text-xs mt-0.5 leading-relaxed">{item.description}</p>
+                                <p className="text-theme-muted text-[10px] md:text-xs mt-0.5 leading-relaxed">{item.description}</p>
                               )}
                             </div>
                           </div>
 
                           <div className="flex items-center gap-2 self-center">
                             {item.price > 0 && (
-                              <span className="text-xs font-semibold text-zinc-300 flex items-center">
+                              <span className="text-xs font-semibold text-theme-text flex items-center">
                                 <DollarSign size={12} className="-mr-0.5" />
                                 {item.price}
                               </span>
@@ -314,7 +314,7 @@ export function TripCard({ trip }: TripCardProps) {
                             <button
                               id={`delete_item_btn_${item.id}`}
                               onClick={() => handleDeleteItem(item.id)}
-                              className="p-1.5 text-zinc-500 hover:text-rose-400 rounded-md hover:bg-rose-500/10 transition cursor-pointer"
+                              className="p-1.5 text-theme-muted hover:text-rose-400 rounded-md hover:bg-rose-500/10 transition cursor-pointer"
                             >
                               <Trash2 size={13} />
                             </button>

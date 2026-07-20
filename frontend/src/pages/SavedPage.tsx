@@ -20,21 +20,21 @@ export function SavedPage() {
       
       {/* Header */}
       <div className="mb-8">
-        <h1 className="font-display font-extrabold text-2xl md:text-3xl text-white tracking-tight">
+        <h1 className="font-display font-extrabold text-2xl md:text-3xl text-theme-text tracking-tight">
           Saved Collections
         </h1>
-        <p className="text-zinc-400 text-xs md:text-sm mt-1">
+        <p className="text-theme-muted text-xs md:text-sm mt-1">
           Review your pinned hotels, saved dining spots, and favorite sightseeing destinations.
         </p>
       </div>
 
       {!hasItems ? (
-        <div className="bg-zinc-900/40 border border-white/10 rounded-[2.5rem] p-12 text-center text-zinc-400 shadow-2xl">
-          <div className="w-14 h-14 bg-zinc-950 rounded-2xl flex items-center justify-center text-rose-400 mx-auto mb-4 border border-white/10">
+        <div className="bg-theme-card border border-theme-border rounded-[2.5rem] p-12 text-center text-theme-muted shadow-2xl">
+          <div className="w-14 h-14 bg-theme-panel rounded-2xl flex items-center justify-center text-rose-400 mx-auto mb-4 border border-theme-border">
             <Heart size={24} className="fill-rose-500/10" />
           </div>
-          <h3 className="font-display font-bold text-zinc-200 text-sm md:text-base mb-1">Your Library is Empty</h3>
-          <p className="text-xs max-w-xs mx-auto leading-relaxed mb-4 text-zinc-400">
+          <h3 className="font-display font-bold text-theme-text text-sm md:text-base mb-1">Your Library is Empty</h3>
+          <p className="text-xs max-w-xs mx-auto leading-relaxed mb-4 text-theme-muted">
             Start bookmarks! Tap the heart icon on any resort, diner, or landmark in our primary feeds.
           </p>
           <button
@@ -51,7 +51,7 @@ export function SavedPage() {
           {/* Saved Resorts */}
           {savedHotels.length > 0 && (
             <div>
-              <h2 className="text-xs font-bold text-zinc-500 mb-4 uppercase tracking-wider">Bookmarked Hotels ({savedHotels.length})</h2>
+              <h2 className="text-xs font-bold text-theme-muted mb-4 uppercase tracking-wider">Bookmarked Hotels ({savedHotels.length})</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {savedHotels.map(hotel => (
                   <HotelCard key={hotel.id} hotel={hotel} />
@@ -62,8 +62,8 @@ export function SavedPage() {
 
           {/* Saved Dining */}
           {savedRestaurants.length > 0 && (
-            <div className="pt-6 border-t border-white/5">
-              <h2 className="text-xs font-bold text-zinc-500 mb-4 uppercase tracking-wider">Saved Dining & Cafes ({savedRestaurants.length})</h2>
+            <div className="pt-6 border-t border-theme-border">
+              <h2 className="text-xs font-bold text-theme-muted mb-4 uppercase tracking-wider">Saved Dining & Cafes ({savedRestaurants.length})</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {savedRestaurants.map(rest => (
                   <RestaurantCard key={rest.id} restaurant={rest} />
@@ -74,8 +74,8 @@ export function SavedPage() {
 
           {/* Saved Attractions */}
           {savedAttractions.length > 0 && (
-            <div className="pt-6 border-t border-white/5">
-              <h2 className="text-xs font-bold text-zinc-500 mb-4 uppercase tracking-wider">Local Landmarks & Sights ({savedAttractions.length})</h2>
+            <div className="pt-6 border-t border-theme-border">
+              <h2 className="text-xs font-bold text-theme-muted mb-4 uppercase tracking-wider">Local Landmarks & Sights ({savedAttractions.length})</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {savedAttractions.map(attr => (
                   <AttractionCard key={attr.id} attraction={attr} />

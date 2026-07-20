@@ -64,7 +64,7 @@ export function LandingPage({ onEnterPortal }: LandingPageProps) {
       {/* Dynamic Navigation Header */}
       <header id="landing_header" className="sticky top-0 z-50 w-full bg-[#050505]/80 backdrop-blur-md border-b border-white/10 py-4 px-6 md:px-12 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-linear-to-tr from-primary to-emerald-500 flex items-center justify-center text-white shadow-md shadow-primary/25">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-primary to-emerald-500 flex items-center justify-center text-white shadow-md shadow-primary/25">
             <Compass size={20} className="animate-spin-slow" />
           </div>
           <div>
@@ -116,7 +116,7 @@ export function LandingPage({ onEnterPortal }: LandingPageProps) {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.1]"
           >
-            Your Intelligent <span className="bg-linear-to-r from-indigo-400 via-purple-400 to-emerald-400 bg-clip-text text-transparent">Gateway</span> to the World
+            Your Intelligent <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-emerald-400 bg-clip-text text-transparent">Gateway</span> to the World
           </motion.h2>
 
           <motion.p 
@@ -210,7 +210,7 @@ export function LandingPage({ onEnterPortal }: LandingPageProps) {
                     }`}
                   >
                     {isSelected && (
-                      <div className="absolute left-0 top-0 bottom-0 w-1 bg-linear-to-b from-primary to-emerald-500" />
+                      <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-emerald-500" />
                     )}
                     <div className="flex items-start gap-4">
                       <div className={`p-2.5 rounded-xl border ${isSelected ? tab.color : 'border-white/5 bg-white/5'}`}>
@@ -233,7 +233,7 @@ export function LandingPage({ onEnterPortal }: LandingPageProps) {
           </div>
 
           {/* Right panel: Live Interactive Mockup Frame */}
-          <div className="lg:col-span-7 bg-zinc-950/80 rounded-4xl border border-white/10 p-4 md:p-6 shadow-2xl flex flex-col justify-between min-h-115 relative overflow-hidden">
+          <div className="lg:col-span-7 bg-zinc-950/80 rounded-[2rem] border border-white/10 p-4 md:p-6 shadow-2xl flex flex-col justify-between min-h-[460px] relative overflow-hidden">
             
             {/* Top Frame Bar */}
             <div className="flex items-center justify-between pb-4 border-b border-white/5 mb-4 text-xs font-mono text-zinc-500">
@@ -261,7 +261,7 @@ export function LandingPage({ onEnterPortal }: LandingPageProps) {
                     exit={{ opacity: 0, y: -10 }}
                     className="flex-1 flex flex-col justify-between"
                   >
-                    <div className="space-y-3 max-h-70 overflow-y-auto pr-1 no-scrollbar text-xs">
+                    <div className="space-y-3 max-h-[280px] overflow-y-auto pr-1 no-scrollbar text-xs">
                       {simulatedChat.map((msg, idx) => (
                         <div 
                           key={idx} 
@@ -387,7 +387,7 @@ export function LandingPage({ onEnterPortal }: LandingPageProps) {
                       </div>
                       <div className="w-full bg-zinc-950 h-2 rounded-full overflow-hidden">
                         <div 
-                          className="bg-linear-to-r from-emerald-500 to-indigo-500 h-full transition-all duration-500 rounded-full" 
+                          className="bg-gradient-to-r from-emerald-500 to-indigo-500 h-full transition-all duration-500 rounded-full" 
                           style={{ width: `${progressPercent}%` }}
                         />
                       </div>
@@ -407,7 +407,7 @@ export function LandingPage({ onEnterPortal }: LandingPageProps) {
                     <p className="text-[10px] text-zinc-500 font-semibold tracking-wider uppercase">SIMULATED VOUCHERS</p>
 
                     {/* Flight Pass */}
-                    <div className="bg-linear-to-r from-indigo-950/40 via-purple-950/20 to-zinc-900 border border-indigo-500/20 rounded-2xl overflow-hidden flex flex-col">
+                    <div className="bg-gradient-to-r from-indigo-950/40 via-purple-950/20 to-zinc-900 border border-indigo-500/20 rounded-2xl overflow-hidden flex flex-col">
                       <div className="p-3 px-4 bg-indigo-500/10 border-b border-indigo-500/20 flex items-center justify-between">
                         <span className="text-xs font-bold text-indigo-300 flex items-center gap-1.5">
                           <Plane size={13} /> FLIGHT VOUCHER
@@ -526,7 +526,7 @@ export function LandingPage({ onEnterPortal }: LandingPageProps) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
             {/* Benefit 1 */}
-            <div className="p-6 rounded-4xl bg-zinc-950 border border-white/5 flex flex-col justify-between hover:border-white/10 transition duration-300">
+            <div className="p-6 rounded-[2rem] bg-zinc-950 border border-white/5 flex flex-col justify-between hover:border-white/10 transition duration-300">
               <div className="space-y-4">
                 <div className="w-10 h-10 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center">
                   <ShieldCheck size={20} />
@@ -542,7 +542,7 @@ export function LandingPage({ onEnterPortal }: LandingPageProps) {
             </div>
 
             {/* Benefit 2 */}
-            <div className="p-6 rounded-4xl bg-zinc-950 border border-white/5 flex flex-col justify-between hover:border-white/10 transition duration-300">
+            <div className="p-6 rounded-[2rem] bg-zinc-950 border border-white/5 flex flex-col justify-between hover:border-white/10 transition duration-300">
               <div className="space-y-4">
                 <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center">
                   <Sparkles size={20} />
@@ -558,7 +558,7 @@ export function LandingPage({ onEnterPortal }: LandingPageProps) {
             </div>
 
             {/* Benefit 3 */}
-            <div className="p-6 rounded-4xl bg-zinc-950 border border-white/5 flex flex-col justify-between hover:border-white/10 transition duration-300">
+            <div className="p-6 rounded-[2rem] bg-zinc-950 border border-white/5 flex flex-col justify-between hover:border-white/10 transition duration-300">
               <div className="space-y-4">
                 <div className="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center">
                   <Ticket size={20} />

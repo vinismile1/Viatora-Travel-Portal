@@ -55,15 +55,15 @@ export function TripsPage() {
   };
 
   return (
-    <div id="trips_page_wrapper" className="pb-24 pt-4 px-4 md:px-8 max-w-4xl mx-auto">
+    <div id="trips_page_wrapper" className="pb-24 pt-4 px-4 md:px-8 max-w-4xl mx-auto text-theme-text">
       
       {/* Header with quick creation action */}
       <div className="flex items-center justify-between gap-4 mb-8">
         <div>
-          <h1 className="font-display font-extrabold text-2xl md:text-3xl text-white tracking-tight">
+          <h1 className="font-display font-extrabold text-2xl md:text-3xl text-theme-text tracking-tight">
             My Planned Trips
           </h1>
-          <p className="text-zinc-400 text-xs md:text-sm mt-1">
+          <p className="text-theme-muted text-xs md:text-sm mt-1">
             Browse and organize day-by-day travel schedules, or trigger Gemini to draft high-fidelity custom timetrees.
           </p>
         </div>
@@ -88,24 +88,24 @@ export function TripsPage() {
 
       {/* Slide-out quick planner form inside page */}
       {showAddForm && (
-        <div className="bg-zinc-950 border border-white/10 rounded-[2.5rem] p-6 mb-8 shadow-2xl relative animate-in fade-in slide-in-from-top-3 duration-250 text-zinc-200">
+        <div className="bg-theme-card border border-theme-border rounded-[2.5rem] p-6 mb-8 shadow-2xl relative animate-in fade-in slide-in-from-top-3 duration-250 text-theme-text">
           <button
             id="close_trip_form_btn"
             onClick={() => setShowAddForm(false)}
-            className="absolute top-4 right-4 p-1.5 hover:bg-zinc-900 rounded-full text-zinc-500 hover:text-zinc-300 transition cursor-pointer"
+            className="absolute top-4 right-4 p-1.5 hover:bg-theme-panel rounded-full text-theme-muted hover:text-theme-text transition cursor-pointer"
           >
             <X size={16} />
           </button>
 
-          <h3 className="font-display font-bold text-white text-base mb-1">Create Travel Itinerary</h3>
-          <p className="text-xs text-zinc-400 mb-5 leading-relaxed">
+          <h3 className="font-display font-bold text-theme-text text-base mb-1">Create Travel Itinerary</h3>
+          <p className="text-xs text-theme-muted mb-5 leading-relaxed">
             Choose standard scheduling or let our Gemini module structure customizable activities automatically.
           </p>
 
           <div className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[10px] font-bold text-zinc-500 mb-1">CITY / DESTINATION</label>
+                <label className="block text-[10px] font-bold text-theme-muted mb-1">CITY / DESTINATION</label>
                 <select
                   id="select_dest_trip_form"
                   value={destId}
@@ -114,16 +114,16 @@ export function TripsPage() {
                     const dest = destinations.find(d => d.id === e.target.value);
                     if (dest) setTitle(`My Trip to ${dest.name}`);
                   }}
-                  className="w-full px-3 py-2.5 bg-zinc-900 border border-white/10 rounded-xl text-xs outline-none focus:border-primary text-zinc-300 font-sans"
+                  className="w-full px-3 py-2.5 bg-theme-panel border border-theme-border rounded-xl text-xs outline-none focus:border-primary text-theme-text font-sans cursor-pointer"
                 >
                   {destinations.map(d => (
-                    <option key={d.id} value={d.id} className="bg-zinc-950 text-zinc-200">{d.name} ({d.country})</option>
+                    <option key={d.id} value={d.id} className="bg-theme-panel text-theme-text">{d.name} ({d.country})</option>
                   ))}
                 </select>
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold text-zinc-500 mb-1">TRIP TITLE</label>
+                <label className="block text-[10px] font-bold text-theme-muted mb-1">TRIP TITLE</label>
                 <input
                   id="input_title_trip_form"
                   type="text"
@@ -131,49 +131,49 @@ export function TripsPage() {
                   placeholder="Summer Vacation..."
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full px-3 py-2.5 bg-zinc-900 border border-white/10 rounded-xl text-xs outline-none focus:border-primary text-zinc-100"
+                  className="w-full px-3 py-2.5 bg-theme-panel border border-theme-border rounded-xl text-xs outline-none focus:border-primary text-theme-text"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-3 gap-3">
               <div>
-                <label className="block text-[10px] font-bold text-zinc-500 mb-1">START DATE</label>
+                <label className="block text-[10px] font-bold text-theme-muted mb-1">START DATE</label>
                 <input
                   id="input_start_date_trip_form"
                   type="date"
                   required
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="w-full px-2 py-2 bg-zinc-900 border border-white/10 rounded-xl text-xs outline-none text-zinc-300"
+                  className="w-full px-2 py-2 bg-theme-panel border border-theme-border rounded-xl text-xs outline-none text-theme-text cursor-pointer"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold text-zinc-500 mb-1">END DATE</label>
+                <label className="block text-[10px] font-bold text-theme-muted mb-1">END DATE</label>
                 <input
                   id="input_end_date_trip_form"
                   type="date"
                   required
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
-                  className="w-full px-2 py-2 bg-zinc-900 border border-white/10 rounded-xl text-xs outline-none text-zinc-300"
+                  className="w-full px-2 py-2 bg-theme-panel border border-theme-border rounded-xl text-xs outline-none text-theme-text cursor-pointer"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold text-zinc-500 mb-1">TRAVEL STYLE</label>
+                <label className="block text-[10px] font-bold text-theme-muted mb-1">TRAVEL STYLE</label>
                 <select
                   id="select_style_trip_form"
                   value={style}
                   onChange={(e: any) => setStyle(e.target.value)}
-                  className="w-full px-2 py-2.5 bg-zinc-900 border border-white/10 rounded-xl text-xs outline-none focus:border-primary text-zinc-300"
+                  className="w-full px-2 py-2.5 bg-theme-panel border border-theme-border rounded-xl text-xs outline-none focus:border-primary text-theme-text cursor-pointer"
                 >
-                  <option value="adventure" className="bg-zinc-950">🎒 Adventure</option>
-                  <option value="luxury" className="bg-zinc-950">💎 Luxury</option>
-                  <option value="budget" className="bg-zinc-950">💵 Budget</option>
-                  <option value="relaxation" className="bg-zinc-950">🏖️ Relaxation</option>
-                  <option value="family" className="bg-zinc-950">👨‍👩‍👧 Family</option>
+                  <option value="adventure" className="bg-theme-panel text-theme-text">🎒 Adventure</option>
+                  <option value="luxury" className="bg-theme-panel text-theme-text">💎 Luxury</option>
+                  <option value="budget" className="bg-theme-panel text-theme-text">💵 Budget</option>
+                  <option value="relaxation" className="bg-theme-panel text-theme-text">🏖️ Relaxation</option>
+                  <option value="family" className="bg-theme-panel text-theme-text">👨‍👩‍👧 Family</option>
                 </select>
               </div>
             </div>
@@ -183,7 +183,7 @@ export function TripsPage() {
                 id="form_standard_btn"
                 onClick={() => handleCreateTrip(false)}
                 disabled={loading}
-                className="px-4 py-2.5 bg-zinc-900 hover:bg-zinc-850 text-zinc-300 text-xs font-semibold rounded-xl border border-white/5 transition cursor-pointer"
+                className="px-4 py-2.5 bg-theme-panel hover:bg-theme-panel/80 text-theme-text text-xs font-semibold rounded-xl border border-theme-border transition cursor-pointer"
               >
                 Create Standard
               </button>
@@ -204,12 +204,12 @@ export function TripsPage() {
 
       {/* Main trips lists */}
       {trips.length === 0 ? (
-        <div className="bg-zinc-900/40 border border-white/10 rounded-[2.5rem] p-12 text-center text-zinc-500 shadow-2xl">
-          <div className="w-14 h-14 bg-zinc-950 rounded-2xl flex items-center justify-center text-zinc-400 mx-auto mb-4 border border-white/10">
+        <div className="bg-theme-card border border-theme-border rounded-[2.5rem] p-12 text-center text-theme-muted shadow-2xl">
+          <div className="w-14 h-14 bg-theme-panel rounded-2xl flex items-center justify-center text-theme-text mx-auto mb-4 border border-theme-border">
             <Map size={24} />
           </div>
-          <h3 className="font-display font-bold text-zinc-300 text-sm md:text-base mb-1">No Planned Trips</h3>
-          <p className="text-xs max-w-xs mx-auto leading-relaxed text-zinc-400">
+          <h3 className="font-display font-bold text-theme-text text-sm md:text-base mb-1">No Planned Trips</h3>
+          <p className="text-xs max-w-xs mx-auto leading-relaxed text-theme-muted">
             Plan your next journey! Choose standard planning or trigger our Gemini builder to structure activities automatically.
           </p>
         </div>

@@ -1,5 +1,3 @@
-// Suppress missing type declarations for 'react' in this environment
-// @ts-ignore
 import React, { useState } from 'react';
 import { AppProvider, useApp } from './context/AppContext';
 import { Navbar } from './components/Navbar';
@@ -57,7 +55,7 @@ function AppContent() {
   };
 
   return (
-    <div id="app_viewport" className="min-h-screen bg-[#050505] text-zinc-100 flex flex-col font-sans selection:bg-primary/30 selection:text-indigo-400">
+    <div id="app_viewport" className="min-h-screen bg-theme-bg text-theme-text flex flex-col font-sans transition-colors duration-300 selection:bg-primary/30 selection:text-indigo-400">
       {/* Dynamic Header */}
       <Navbar />
 

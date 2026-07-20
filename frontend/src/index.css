@@ -1,6 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
+:root {
+  --theme-bg: #f8fafc;
+  --theme-card: #ffffff;
+  --theme-panel: #f1f5f9;
+  --theme-text: #0f172a;
+  --theme-muted: #64748b;
+  --theme-border: rgba(15, 23, 42, 0.08);
+}
+
+.dark {
+  --theme-bg: #050505;
+  --theme-card: #0c0c0e;
+  --theme-panel: #0a0a0a;
+  --theme-text: #f4f4f5;
+  --theme-muted: #a1a1aa;
+  --theme-border: rgba(255, 255, 255, 0.08);
+}
+
 @theme {
   --font-sans: "Inter", "Poppins", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Poppins", "Inter", sans-serif;
@@ -10,6 +28,13 @@
   --color-primary-hover: #4338ca;
   --color-secondary: #06b6d4;
   --color-accent: #f59e0b;
+
+  --color-theme-bg: var(--theme-bg);
+  --color-theme-card: var(--theme-card);
+  --color-theme-panel: var(--theme-panel);
+  --color-theme-text: var(--theme-text);
+  --color-theme-muted: var(--theme-muted);
+  --color-theme-border: var(--theme-border);
 }
 
 /* Custom scrollbars and styling utilities */

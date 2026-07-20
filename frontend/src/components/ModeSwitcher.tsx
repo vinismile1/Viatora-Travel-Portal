@@ -24,10 +24,10 @@ export function ModeSwitcher() {
               id={`mode_btn_${mode.id}`}
               key={mode.id}
               onClick={() => setActiveMode(mode.id)}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-full border text-xs md:text-sm font-medium transition-all duration-300 ${
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-full border text-xs md:text-sm font-medium transition-all duration-300 cursor-pointer ${
                 isActive
                   ? 'bg-primary text-white border-primary shadow-lg transform scale-105'
-                  : 'bg-zinc-900/40 text-zinc-400 border-white/5 hover:border-white/10 hover:bg-white/5'
+                  : 'bg-theme-card text-theme-muted border-theme-border hover:border-theme-text/20 hover:bg-theme-panel'
               }`}
             >
               <Icon size={16} className={isActive ? 'text-white' : 'text-zinc-500'} />
