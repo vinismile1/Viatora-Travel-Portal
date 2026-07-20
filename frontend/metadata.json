@@ -1,0 +1,6 @@
+{
+  "name": "Viatora Travel Platform",
+  "description": "AI-powered all-in-one travel companion for personalized itineraries, live bookings, and real-time trip updates.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

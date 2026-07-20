@@ -1,0 +1,373 @@
+{
+  "users": [
+    {
+      "id": "usr_1784507411959",
+      "name": "Sneha Mishra",
+      "email": "snehamishra0013@gmail.com",
+      "passwordHash": "15e2b0d3c33891ebb0f1ef609ec419420c20e320ce94c65fbc8c3312448eb225",
+      "createdAt": "2026-07-20T00:30:11.959Z"
+    }
+  ],
+  "userPreferences": [
+    {
+      "userId": "usr_1784507411959",
+      "preferredStyle": "adventure",
+      "dietary": [],
+      "interests": []
+    }
+  ],
+  "destinations": [
+    {
+      "id": "dest_1",
+      "name": "Kyoto",
+      "country": "Japan",
+      "description": "Famed for its classical Buddhist temples, gardens, imperial palaces, Shinto shrines and traditional wooden houses.",
+      "image": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80",
+      "rating": 4.9,
+      "lat": 35.0116,
+      "lng": 135.7681
+    },
+    {
+      "id": "dest_2",
+      "name": "Amalfi Coast",
+      "country": "Italy",
+      "description": "A 50-kilometer stretch of coastline along the southern edge of Italy’s Sorrentine Peninsula, famous for its cliffside towns, beaches, and lemon groves.",
+      "image": "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=800&q=80",
+      "rating": 4.8,
+      "lat": 40.634,
+      "lng": 14.6027
+    },
+    {
+      "id": "dest_3",
+      "name": "Paris",
+      "country": "France",
+      "description": "France’s capital, is a major European city and a global center for art, fashion, gastronomy, and culture.",
+      "image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80",
+      "rating": 4.7,
+      "lat": 48.8566,
+      "lng": 2.3522
+    },
+    {
+      "id": "dest_4",
+      "name": "Bali",
+      "country": "Indonesia",
+      "description": "A tropical paradise famed for its forested volcanic mountains, iconic rice paddies, beaches, and coral reefs.",
+      "image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80",
+      "rating": 4.9,
+      "lat": -8.4095,
+      "lng": 115.1889
+    }
+  ],
+  "hotels": [
+    {
+      "id": "hotel_1_1",
+      "destinationId": "dest_1",
+      "name": "Sowaka Ryokan",
+      "description": "A beautifully restored traditional townhouse ryokan in Gion, offering high-end luxury and authentic Japanese hospitality.",
+      "pricePerNight": 450,
+      "rating": 4.9,
+      "image": "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80",
+      "lat": 35.0025,
+      "lng": 135.7785,
+      "amenities": [
+        "Spa",
+        "Hot Spring Bath",
+        "Traditional Dinner",
+        "Garden View",
+        "Free Wi-Fi"
+      ]
+    },
+    {
+      "id": "hotel_1_2",
+      "destinationId": "dest_1",
+      "name": "The Thousand Kyoto",
+      "description": "A modern wellness hotel right next to Kyoto Station, combining minimalist wooden design with high-tech comfort.",
+      "pricePerNight": 280,
+      "rating": 4.7,
+      "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
+      "lat": 34.9868,
+      "lng": 135.7612,
+      "amenities": [
+        "Gym",
+        "Bar",
+        "Spa",
+        "Tea Lounge",
+        "Electric Car Charging"
+      ]
+    },
+    {
+      "id": "hotel_2_1",
+      "destinationId": "dest_2",
+      "name": "Hotel Santa Caterina",
+      "description": "A late 19th-century liberty style villa overlooking the sea, framed by the intense blue of the Amalfi Coast.",
+      "pricePerNight": 850,
+      "rating": 4.9,
+      "image": "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=800&q=80",
+      "lat": 40.6315,
+      "lng": 14.5935,
+      "amenities": [
+        "Private Beach",
+        "Infinity Pool",
+        "Michelin Restaurant",
+        "Sea View Balcony",
+        "Spa"
+      ]
+    },
+    {
+      "id": "hotel_3_1",
+      "destinationId": "dest_3",
+      "name": "Hôtel Regina Louvre",
+      "description": "Overlooking the Louvre and Tuileries Gardens, offering classic French elegance in the heart of Paris.",
+      "pricePerNight": 390,
+      "rating": 4.6,
+      "image": "https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=800&q=80",
+      "lat": 48.8631,
+      "lng": 2.3315,
+      "amenities": [
+        "Eiffel Tower View",
+        "Bar & Lounge",
+        "Pet Friendly",
+        "Room Service",
+        "Airport Shuttle"
+      ]
+    },
+    {
+      "id": "hotel_4_1",
+      "destinationId": "dest_4",
+      "name": "Ubud Hanging Gardens",
+      "description": "Overlooking the Ayung River, the luxurious Hanging Gardens of Bali offers villas with a private infinity pool amidst dense forest.",
+      "pricePerNight": 520,
+      "rating": 4.9,
+      "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80",
+      "lat": -8.4112,
+      "lng": 115.2514,
+      "amenities": [
+        "Twin-Tiered Infinity Pool",
+        "Jungle Spa",
+        "Fine Dining",
+        "Free Shuttle",
+        "Yoga Deck"
+      ]
+    }
+  ],
+  "restaurants": [
+    {
+      "id": "rest_1_1",
+      "destinationId": "dest_1",
+      "name": "Gion Karyo",
+      "description": "Set in an ancient merchant home, serving exquisite multi-course Kaiseki menus highlighting seasonal ingredients.",
+      "cuisine": "Kaiseki (Japanese Fine Dining)",
+      "priceLevel": "$$$$",
+      "rating": 4.8,
+      "image": "https://images.unsplash.com/photo-1611143669185-af224c5e3252?auto=format&fit=crop&w=800&q=80",
+      "lat": 35.0018,
+      "lng": 135.776,
+      "specialties": [
+        "Seasonal Sashimi",
+        "Grilled Wagyu",
+        "Matsutake Soup"
+      ]
+    },
+    {
+      "id": "rest_1_2",
+      "destinationId": "dest_1",
+      "name": "Honke Owariya",
+      "description": "Kyoto’s oldest active restaurant, serving famous soba noodles since 1465 inside a gorgeous wooden traditional townhouse.",
+      "cuisine": "Soba & Tempura",
+      "priceLevel": "$$",
+      "rating": 4.6,
+      "image": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=80",
+      "lat": 35.0125,
+      "lng": 135.7608,
+      "specialties": [
+        "Hourai Soba",
+        "Shrimp Tempura Soba",
+        "Matcha Parfait"
+      ]
+    },
+    {
+      "id": "rest_2_1",
+      "destinationId": "dest_2",
+      "name": "Da Gemma",
+      "description": "A short walk from the Amalfi cathedral, offering fantastic traditional hand-made pasta and fresh seafood dishes.",
+      "cuisine": "Italian Seafood",
+      "priceLevel": "$$$",
+      "rating": 4.7,
+      "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
+      "lat": 40.6331,
+      "lng": 14.6022,
+      "specialties": [
+        "Scialatielli with Seafood",
+        "Tuna Carpaccio",
+        "Lemon Souffle"
+      ]
+    },
+    {
+      "id": "rest_3_1",
+      "destinationId": "dest_3",
+      "name": "Le Bistrot Paul Bert",
+      "description": "A classic Parisian bistro serving iconic dishes like steak frites and tart tatin in an lively, authentic neighborhood environment.",
+      "cuisine": "Traditional French Bistro",
+      "priceLevel": "$$$",
+      "rating": 4.7,
+      "image": "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80",
+      "lat": 48.8504,
+      "lng": 2.3814,
+      "specialties": [
+        "Steak au Poivre",
+        "Grand Marnier Soufflé",
+        "Roasted Bone Marrow"
+      ]
+    }
+  ],
+  "attractions": [
+    {
+      "id": "attr_1_1",
+      "destinationId": "dest_1",
+      "name": "Fushimi Inari Taisha",
+      "category": "historic",
+      "rating": 4.9,
+      "price": 0,
+      "image": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80",
+      "lat": 34.9671,
+      "lng": 135.7727,
+      "description": "Famous for its thousands of vibrant vermilion torii gates, which straddle a network of trails behind its main buildings."
+    },
+    {
+      "id": "attr_1_2",
+      "destinationId": "dest_1",
+      "name": "Kinkaku-ji (Golden Pavilion)",
+      "category": "sightseeing",
+      "rating": 4.8,
+      "price": 5,
+      "image": "https://images.unsplash.com/photo-1542044896530-05d85be9b11a?auto=format&fit=crop&w=800&q=80",
+      "lat": 35.0394,
+      "lng": 135.7292,
+      "description": "A Zen Buddhist temple whose top two floors are completely covered in brilliant gold leaf, overlooking a pristine mirror pond."
+    },
+    {
+      "id": "attr_2_1",
+      "destinationId": "dest_2",
+      "name": "Sentiero degli Dei (Path of the Gods)",
+      "category": "adventure",
+      "rating": 4.9,
+      "price": 0,
+      "image": "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=800&q=80",
+      "lat": 40.6273,
+      "lng": 14.5122,
+      "description": "A cliffside hiking trail that links the cliff towns, offering some of the most spectacular coastal panoramas in the world."
+    },
+    {
+      "id": "attr_3_1",
+      "destinationId": "dest_3",
+      "name": "Louvre Museum",
+      "category": "museum",
+      "rating": 4.8,
+      "price": 22,
+      "image": "https://images.unsplash.com/photo-1597910037310-7cca8d3c7474?auto=format&fit=crop&w=800&q=80",
+      "lat": 48.8606,
+      "lng": 2.3376,
+      "description": "The world’s largest art museum and a historic monument in Paris, home to the Mona Lisa and thousands of masterworks."
+    },
+    {
+      "id": "attr_4_1",
+      "destinationId": "dest_4",
+      "name": "Tegallalang Rice Terraces",
+      "category": "park",
+      "rating": 4.7,
+      "price": 2,
+      "image": "https://images.unsplash.com/photo-1501179691627-eeaa65ea017c?auto=format&fit=crop&w=800&q=80",
+      "lat": -8.4312,
+      "lng": 115.2797,
+      "description": "Famous terraced hillside rice paddies offering beautiful vistas and classic swings overlooking the dense tropical valley."
+    }
+  ],
+  "trips": [],
+  "tripItems": [],
+  "bookings": [
+    {
+      "id": "book_1784507683657",
+      "userId": "usr_1784507411959",
+      "type": "attraction",
+      "title": "Louvre Museum Admission Pass",
+      "details": "Full-access day pass. Category: museum",
+      "price": 22,
+      "date": "2026-07-21",
+      "status": "cancelled",
+      "image": "https://images.unsplash.com/photo-1597910037310-7cca8d3c7474?auto=format&fit=crop&w=800&q=80"
+    }
+  ],
+  "savedPlaces": [],
+  "reviews": [],
+  "notifications": [
+    {
+      "id": "notif_1784507411962_jq7sb",
+      "userId": "usr_1784507411959",
+      "title": "Welcome to Viatora!",
+      "message": "Hello Sneha Mishra, welcome to Viatora! Try searching for destinations or chatting with our AI to plan your next trip!",
+      "type": "update",
+      "read": true,
+      "createdAt": "2026-07-20T00:30:11.962Z"
+    },
+    {
+      "id": "notif_1784507683665_al3gs",
+      "userId": "usr_1784507411959",
+      "title": "Booking Confirmed",
+      "message": "Your booking for Louvre Museum Admission Pass (attraction) has been confirmed for 2026-07-21! Total: $22.",
+      "type": "update",
+      "read": true,
+      "createdAt": "2026-07-20T00:34:43.665Z"
+    }
+  ],
+  "aiConversations": [
+    {
+      "id": "conv_1784507463858",
+      "userId": "usr_1784507411959",
+      "title": "Viatora Chat",
+      "messages": [
+        {
+          "role": "user",
+          "text": "Plan a 3-day Paris trip",
+          "timestamp": "2026-07-20T00:31:03.861Z"
+        },
+        {
+          "role": "model",
+          "text": "I would love to help you plan your trip! [Note: Server is currently running in Preview Mode with a demo response. To unlock full real-time Gemini processing, please make sure your GEMINI_API_KEY is configured in the Secrets panel].\n\nBased on your preferences (adventure traveler, interested in cultural sights), I recommend visiting Kyoto or Bali! Both offer amazing landscapes, rich dining experiences, and custom accommodations like standard luxury resorts or traditional ryokans. Let me know if you would like me to draft an itinerary for you!",
+          "timestamp": "2026-07-20T00:31:03.862Z"
+        },
+        {
+          "role": "user",
+          "text": "What should I eat in Kyoto?",
+          "timestamp": "2026-07-20T00:31:12.518Z"
+        },
+        {
+          "role": "model",
+          "text": "I would love to help you plan your trip! [Note: Server is currently running in Preview Mode with a demo response. To unlock full real-time Gemini processing, please make sure your GEMINI_API_KEY is configured in the Secrets panel].\n\nBased on your preferences (adventure traveler, interested in cultural sights), I recommend visiting Kyoto or Bali! Both offer amazing landscapes, rich dining experiences, and custom accommodations like standard luxury resorts or traditional ryokans. Let me know if you would like me to draft an itinerary for you!",
+          "timestamp": "2026-07-20T00:31:12.520Z"
+        },
+        {
+          "role": "user",
+          "text": "What should I eat in Kyoto?",
+          "timestamp": "2026-07-20T00:33:30.158Z"
+        },
+        {
+          "role": "model",
+          "text": "I would love to help you plan your trip! [Note: Server is currently running in Preview Mode with a demo response. To unlock full real-time Gemini processing, please make sure your GEMINI_API_KEY is configured in the Secrets panel].\n\nBased on your preferences (adventure traveler, interested in cultural sights), I recommend visiting Kyoto or Bali! Both offer amazing landscapes, rich dining experiences, and custom accommodations like standard luxury resorts or traditional ryokans. Let me know if you would like me to draft an itinerary for you!",
+          "timestamp": "2026-07-20T00:33:30.160Z"
+        },
+        {
+          "role": "user",
+          "text": "Best attractions in Bali",
+          "timestamp": "2026-07-20T00:33:41.462Z"
+        },
+        {
+          "role": "model",
+          "text": "I would love to help you plan your trip! [Note: Server is currently running in Preview Mode with a demo response. To unlock full real-time Gemini processing, please make sure your GEMINI_API_KEY is configured in the Secrets panel].\n\nBased on your preferences (adventure traveler, interested in cultural sights), I recommend visiting Kyoto or Bali! Both offer amazing landscapes, rich dining experiences, and custom accommodations like standard luxury resorts or traditional ryokans. Let me know if you would like me to draft an itinerary for you!",
+          "timestamp": "2026-07-20T00:33:41.465Z"
+        }
+      ],
+      "createdAt": "2026-07-20T00:31:03.858Z"
+    }
+  ],
+  "expenses": []
+}
