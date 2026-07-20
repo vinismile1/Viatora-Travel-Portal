@@ -54,7 +54,7 @@ export function AuthPage({
         
         {/* Brand Banner */}
         <div className="flex flex-col items-center mb-6">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-primary to-emerald-500 flex items-center justify-center text-white shadow-lg shadow-primary/20 mb-3">
+          <div className="w-12 h-12 rounded-2xl bg-linear-to-tr from-primary to-emerald-500 flex items-center justify-center text-white shadow-lg shadow-primary/20 mb-3">
             <Compass size={24} />
           </div>
           <h2 className="font-display font-extrabold text-2xl text-theme-text tracking-tight">
