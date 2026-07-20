@@ -20,6 +20,13 @@
       "email": "agni@gmail.com",
       "passwordHash": "15e2b0d3c33891ebb0f1ef609ec419420c20e320ce94c65fbc8c3312448eb225",
       "createdAt": "2026-07-20T10:53:30.454Z"
+    },
+    {
+      "id": "usr_1784589757132",
+      "name": "Test User",
+      "email": "test@example.com",
+      "passwordHash": "d519397a4e89a7a66d28a266ed00a679bdee93fddec9ebba7d01ff27c39c1a99",
+      "createdAt": "2026-07-20T23:22:37.132Z"
     }
   ],
   "userPreferences": [
@@ -340,6 +347,15 @@
       "type": "update",
       "read": false,
       "createdAt": "2026-07-20T10:53:30.455Z"
+    },
+    {
+      "id": "notif_1784589757134_pbpa9",
+      "userId": "usr_1784589757132",
+      "title": "Welcome to Viatora!",
+      "message": "Hello Test User, welcome to Viatora! Try searching for destinations or chatting with our AI to plan your next trip!",
+      "type": "update",
+      "read": false,
+      "createdAt": "2026-07-20T23:22:37.134Z"
     }
   ],
   "aiConversations": [],
