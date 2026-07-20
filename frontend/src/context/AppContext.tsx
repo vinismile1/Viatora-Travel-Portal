@@ -1,8 +1,41 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { 
-  User, UserPreferences, Destination, Hotel, Restaurant, Attraction, 
-  Trip, TripItem, Booking, SavedPlace, Notification, Expense, AIConversation 
+import {
+  User,
+  UserPreferences,
+  Destination,
+  Hotel,
+  Restaurant,
+  Attraction,
+  Trip,
+  TripItem,
+  Booking,
+  Notification,
+  Expense,
+  AIConversation
 } from '../types';
+
+interface ImportMetaEnv {
+  readonly VITE_API_URL?: string;
+}
+
+declare global {
+  interface ImportMeta {
+    readonly env: ImportMetaEnv;
+  }
+}
+
+// ============================================================
+// API CONFIGURATION
+// ============================================================
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
+// Helper function to build API URLs
+const apiUrl = (endpoint: string) => `${API_URL}${endpoint}`;
+
+// ============================================================
+// CONTEXT TYPES
+// ============================================================
 
 interface AppContextType {
   user: User | null;
@@ -18,50 +51,127 @@ interface AppContextType {
   notifications: Notification[];
   expenses: Expense[];
   loading: boolean;
+
   activeTab: 'home' | 'bookings' | 'trips' | 'saved' | 'profile';
   activeMode: 'all' | 'travel' | 'food' | 'explore' | 'guide';
   searchQuery: string;
-  setActiveTab: (tab: 'home' | 'bookings' | 'trips' | 'saved' | 'profile') => void;
-  setActiveMode: (mode: 'all' | 'travel' | 'food' | 'explore' | 'guide') => void;
+
+  setActiveTab: (
+    tab: 'home' | 'bookings' | 'trips' | 'saved' | 'profile'
+  ) => void;
+
+  setActiveMode: (
+    mode: 'all' | 'travel' | 'food' | 'explore' | 'guide'
+  ) => void;
+
   setSearchQuery: (query: string) => void;
-  
+
   // Auth
-  register: (name: string, email: string, password: string) => Promise<boolean>;
-  login: (email: string, password: string) => Promise<boolean>;
+  register: (
+    name: string,
+    email: string,
+    password: string
+  ) => Promise<boolean>;
+
+  login: (
+    email: string,
+    password: string
+  ) => Promise<boolean>;
+
   logout: () => void;
-  updatePrefs: (prefs: Partial<UserPreferences>) => Promise<void>;
-  
+
+  updatePrefs: (
+    prefs: Partial<UserPreferences>
+  ) => Promise<void>;
+
   // Trips
   fetchTrips: () => Promise<void>;
-  createTrip: (destinationId: string, title: string, startDate: string, endDate: string) => Promise<any>;
-  deleteTrip: (tripId: string) => Promise<void>;
-  fetchTripItems: (tripId: string) => Promise<TripItem[]>;
-  addTripItem: (tripId: string, item: Omit<TripItem, 'id' | 'tripId' | 'completed'>) => Promise<TripItem | null>;
-  deleteTripItem: (itemId: string) => Promise<void>;
-  toggleTripItem: (itemId: string) => Promise<void>;
-  generateAIItinerary: (destinationId: string, startDate: string, endDate: string, style: string) => Promise<any>;
-  
+
+  createTrip: (
+    destinationId: string,
+    title: string,
+    startDate: string,
+    endDate: string
+  ) => Promise<any>;
+
+  deleteTrip: (
+    tripId: string
+  ) => Promise<void>;
+
+  fetchTripItems: (
+    tripId: string
+  ) => Promise<TripItem[]>;
+
+  addTripItem: (
+    tripId: string,
+    item: Omit<TripItem, 'id' | 'tripId' | 'completed'>
+  ) => Promise<TripItem | null>;
+
+  deleteTripItem: (
+    itemId: string
+  ) => Promise<void>;
+
+  toggleTripItem: (
+    itemId: string
+  ) => Promise<void>;
+
+  generateAIItinerary: (
+    destinationId: string,
+    startDate: string,
+    endDate: string,
+    style: string
+  ) => Promise<any>;
+
   // Bookings
   fetchBookings: () => Promise<void>;
-  createBooking: (booking: Omit<Booking, 'id' | 'userId' | 'status'>) => Promise<Booking | null>;
-  cancelBooking: (bookingId: string) => Promise<void>;
-  
+
+  createBooking: (
+    booking: Omit<Booking, 'id' | 'userId' | 'status'>
+  ) => Promise<Booking | null>;
+
+  cancelBooking: (
+    bookingId: string
+  ) => Promise<void>;
+
   // Saved Places
   fetchSaved: () => Promise<void>;
-  toggleSave: (placeId: string, type: 'destination' | 'hotel' | 'restaurant' | 'attraction') => Promise<void>;
-  
+
+  toggleSave: (
+    placeId: string,
+    type: 'destination' | 'hotel' | 'restaurant' | 'attraction'
+  ) => Promise<void>;
+
   // Notifications
   fetchNotifications: () => Promise<void>;
-  markAsRead: (notifId: string) => Promise<void>;
+
+  markAsRead: (
+    notifId: string
+  ) => Promise<void>;
+
   markAllRead: () => Promise<void>;
-  
+
   // Expenses
-  fetchExpenses: (tripId?: string) => Promise<Expense[]>;
-  addExpense: (expense: Omit<Expense, 'id' | 'userId'>) => Promise<Expense | null>;
-  deleteExpense: (expenseId: string) => Promise<void>;
-  
+  fetchExpenses: (
+    tripId?: string
+  ) => Promise<Expense[]>;
+
+  addExpense: (
+    expense: Omit<Expense, 'id' | 'userId'>
+  ) => Promise<Expense | null>;
+
+  deleteExpense: (
+    expenseId: string
+  ) => Promise<void>;
+
   // AI Chat
-  sendAIChat: (message: string, conversationId?: string) => Promise<{ text: string; conversationId: string }>;
+  sendAIChat: (
+    message: string,
+    conversationId?: string
+  ) => Promise<{
+    text: string;
+    conversationId: string;
+  }>;
+
   getAIConversations: () => Promise<AIConversation[]>;
 
   // Theme
@@ -69,68 +179,179 @@ interface AppContextType {
   toggleTheme: () => void;
 }
 
-const AppContext = createContext<AppContextType | undefined>(undefined);
+// ============================================================
+// CONTEXT
+// ============================================================
 
-export function AppProvider({ children }: { children: React.ReactNode }) {
+const AppContext = createContext<AppContextType | undefined>(
+  undefined
+);
+
+// ============================================================
+// APP PROVIDER
+// ============================================================
+
+export function AppProvider({
+  children
+}: {
+  children: React.ReactNode;
+}) {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(localStorage.getItem('viatora_token'));
-  const [preferences, setPreferences] = useState<UserPreferences | null>(null);
-  const [destinations, setDestinations] = useState<Destination[]>([]);
-  const [hotels, setHotels] = useState<Hotel[]>([]);
-  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
-  const [attractions, setAttractions] = useState<Attraction[]>([]);
-  const [trips, setTrips] = useState<Trip[]>([]);
-  const [bookings, setBookings] = useState<Booking[]>([]);
-  const [savedPlaces, setSavedPlaces] = useState<any[]>([]);
-  const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [expenses, setExpenses] = useState<Expense[]>([]);
-  const [loading, setLoading] = useState(true);
-  
-  // Navigation & Filter States
-  const [activeTab, setActiveTab] = useState<'home' | 'bookings' | 'trips' | 'saved' | 'profile'>('home');
-  const [activeMode, setActiveMode] = useState<'all' | 'travel' | 'food' | 'explore' | 'guide'>('all');
-  const [searchQuery, setSearchQuery] = useState('');
 
-  // Theme State
-  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
-    return (localStorage.getItem('viatora_theme') as 'dark' | 'light') || 'dark';
-  });
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem('viatora_token')
+  );
+
+  const [preferences, setPreferences] =
+    useState<UserPreferences | null>(null);
+
+  const [destinations, setDestinations] =
+    useState<Destination[]>([]);
+
+  const [hotels, setHotels] =
+    useState<Hotel[]>([]);
+
+  const [restaurants, setRestaurants] =
+    useState<Restaurant[]>([]);
+
+  const [attractions, setAttractions] =
+    useState<Attraction[]>([]);
+
+  const [trips, setTrips] =
+    useState<Trip[]>([]);
+
+  const [bookings, setBookings] =
+    useState<Booking[]>([]);
+
+  const [savedPlaces, setSavedPlaces] =
+    useState<any[]>([]);
+
+  const [notifications, setNotifications] =
+    useState<Notification[]>([]);
+
+  const [expenses, setExpenses] =
+    useState<Expense[]>([]);
+
+  const [loading, setLoading] =
+    useState(true);
+
+  // ============================================================
+  // NAVIGATION & FILTER STATES
+  // ============================================================
+
+  const [activeTab, setActiveTab] =
+    useState<
+      'home' | 'bookings' | 'trips' | 'saved' | 'profile'
+    >('home');
+
+  const [activeMode, setActiveMode] =
+    useState<
+      'all' | 'travel' | 'food' | 'explore' | 'guide'
+    >('all');
+
+  const [searchQuery, setSearchQuery] =
+    useState('');
+
+  // ============================================================
+  // THEME
+  // ============================================================
+
+  const [theme, setTheme] =
+    useState<'dark' | 'light'>(() => {
+      return (
+        (localStorage.getItem(
+          'viatora_theme'
+        ) as 'dark' | 'light') || 'dark'
+      );
+    });
 
   useEffect(() => {
-    const root = window.document.documentElement;
+    const root =
+      window.document.documentElement;
+
     root.classList.remove('light', 'dark');
+
     root.classList.add(theme);
-    localStorage.setItem('viatora_theme', theme);
+
+    localStorage.setItem(
+      'viatora_theme',
+      theme
+    );
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+    setTheme(prev =>
+      prev === 'dark'
+        ? 'light'
+        : 'dark'
+    );
   };
 
-  // Fetch static directories on mount
+  // ============================================================
+  // FETCH STATIC DIRECTORY DATA
+  // ============================================================
+
   useEffect(() => {
     async function initData() {
       try {
-        const [destRes, hotelRes, restRes, attrRes] = await Promise.all([
-          fetch('/api/destinations').then(r => r.json()),
-          fetch('/api/hotels').then(r => r.json()),
-          fetch('/api/restaurants').then(r => r.json()),
-          fetch('/api/attractions').then(r => r.json()),
+        const [
+          destRes,
+          hotelRes,
+          restRes,
+          attrRes
+        ] = await Promise.all([
+          fetch(apiUrl('/api/destinations')),
+          fetch(apiUrl('/api/hotels')),
+          fetch(apiUrl('/api/restaurants')),
+          fetch(apiUrl('/api/attractions'))
         ]);
-        setDestinations(destRes || []);
-        setHotels(hotelRes || []);
-        setRestaurants(restRes || []);
-        setAttractions(attrRes || []);
+
+        // Check if API responses are successful
+        if (
+          !destRes.ok ||
+          !hotelRes.ok ||
+          !restRes.ok ||
+          !attrRes.ok
+        ) {
+          throw new Error(
+            'Failed to fetch one or more directory endpoints'
+          );
+        }
+
+        const [
+          destData,
+          hotelData,
+          restData,
+          attrData
+        ] = await Promise.all([
+          destRes.json(),
+          hotelRes.json(),
+          restRes.json(),
+          attrRes.json()
+        ]);
+
+        setDestinations(destData || []);
+        setHotels(hotelData || []);
+        setRestaurants(restData || []);
+        setAttractions(attrData || []);
+
       } catch (err) {
-        console.error('Error fetching baseline directories:', err);
+        console.error(
+          'Error fetching baseline directories:',
+          err
+        );
       } finally {
         setLoading(false);
       }
     }
+
     initData();
   }, []);
 
-  // Fetch user-specific data on token change
+  // ============================================================
+  // FETCH USER DATA WHEN TOKEN CHANGES
+  // ============================================================
+
   useEffect(() => {
     if (!token) {
       setUser(null);
@@ -144,75 +365,197 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     }
 
     async function loadUserData() {
-      const headers = { 'Authorization': `Bearer ${token}` };
+      const headers = {
+        Authorization: `Bearer ${token}`
+      };
+
       try {
-        // Fetch current profile
-        const meRes = await fetch('/api/auth/me', { headers });
+        // Current user profile
+        const meRes = await fetch(
+          apiUrl('/api/auth/me'),
+          { headers }
+        );
+
         if (!meRes.ok) {
           logout();
           return;
         }
-        const meData = await meRes.json();
+
+        const meData =
+          await meRes.json();
+
         setUser(meData.user);
 
-        // Fetch remaining preferences and list items
-        const [prefRes, tripsRes, bookRes, savedRes, notifRes, expRes] = await Promise.all([
-          fetch('/api/users/preferences', { headers }).then(r => r.json()),
-          fetch('/api/trips', { headers }).then(r => r.json()),
-          fetch('/api/bookings', { headers }).then(r => r.json()),
-          fetch('/api/saved', { headers }).then(r => r.json()),
-          fetch('/api/notifications', { headers }).then(r => r.json()),
-          fetch('/api/expenses', { headers }).then(r => r.json()),
+        // Fetch user-specific data
+        const [
+          prefRes,
+          tripsRes,
+          bookRes,
+          savedRes,
+          notifRes,
+          expRes
+        ] = await Promise.all([
+          fetch(
+            apiUrl('/api/users/preferences'),
+            { headers }
+          ),
+
+          fetch(
+            apiUrl('/api/trips'),
+            { headers }
+          ),
+
+          fetch(
+            apiUrl('/api/bookings'),
+            { headers }
+          ),
+
+          fetch(
+            apiUrl('/api/saved'),
+            { headers }
+          ),
+
+          fetch(
+            apiUrl('/api/notifications'),
+            { headers }
+          ),
+
+          fetch(
+            apiUrl('/api/expenses'),
+            { headers }
+          )
         ]);
 
-        setPreferences(prefRes);
-        setTrips(tripsRes || []);
-        setBookings(bookRes || []);
-        setSavedPlaces(savedRes || []);
-        setNotifications(notifRes || []);
-        setExpenses(expRes || []);
+        const [
+          prefData,
+          tripsData,
+          bookData,
+          savedData,
+          notifData,
+          expData
+        ] = await Promise.all([
+          prefRes.json(),
+          tripsRes.json(),
+          bookRes.json(),
+          savedRes.json(),
+          notifRes.json(),
+          expRes.json()
+        ]);
+
+        setPreferences(prefData);
+        setTrips(tripsData || []);
+        setBookings(bookData || []);
+        setSavedPlaces(savedData || []);
+        setNotifications(notifData || []);
+        setExpenses(expData || []);
+
       } catch (err) {
-        console.error('Failed loading user sessions:', err);
+        console.error(
+          'Failed loading user sessions:',
+          err
+        );
       }
     }
+
     loadUserData();
   }, [token]);
 
-  // Auth Operations
-  const register = async (name: string, email: string, password: string) => {
+  // ============================================================
+  // AUTH OPERATIONS
+  // ============================================================
+
+  const register = async (
+    name: string,
+    email: string,
+    password: string
+  ) => {
     try {
-      const res = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Registration failed');
-      
+      const res = await fetch(
+        apiUrl('/api/auth/register'),
+        {
+          method: 'POST',
+
+          headers: {
+            'Content-Type':
+              'application/json'
+          },
+
+          body: JSON.stringify({
+            name,
+            email,
+            password
+          })
+        }
+      );
+
+      const data =
+        await res.json();
+
+      if (!res.ok) {
+        throw new Error(
+          data.error ||
+          'Registration failed'
+        );
+      }
+
       setUser(data.user);
       setToken(data.token);
-      localStorage.setItem('viatora_token', data.token);
+
+      localStorage.setItem(
+        'viatora_token',
+        data.token
+      );
+
       return true;
+
     } catch (err: any) {
       alert(err.message);
       return false;
     }
   };
 
-  const login = async (email: string, password: string) => {
+  const login = async (
+    email: string,
+    password: string
+  ) => {
     try {
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Login failed');
-      
+      const res = await fetch(
+        apiUrl('/api/auth/login'),
+        {
+          method: 'POST',
+
+          headers: {
+            'Content-Type':
+              'application/json'
+          },
+
+          body: JSON.stringify({
+            email,
+            password
+          })
+        }
+      );
+
+      const data =
+        await res.json();
+
+      if (!res.ok) {
+        throw new Error(
+          data.error ||
+          'Login failed'
+        );
+      }
+
       setUser(data.user);
       setToken(data.token);
-      localStorage.setItem('viatora_token', data.token);
+
+      localStorage.setItem(
+        'viatora_token',
+        data.token
+      );
+
       return true;
+
     } catch (err: any) {
       alert(err.message);
       return false;
@@ -222,298 +565,773 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const logout = () => {
     setUser(null);
     setToken(null);
-    localStorage.removeItem('viatora_token');
+
+    localStorage.removeItem(
+      'viatora_token'
+    );
+
     setActiveTab('home');
   };
 
-  const updatePrefs = async (prefs: Partial<UserPreferences>) => {
+  // ============================================================
+  // USER PREFERENCES
+  // ============================================================
+
+  const updatePrefs = async (
+    prefs: Partial<UserPreferences>
+  ) => {
     if (!token) return;
+
     try {
-      const res = await fetch('/api/users/preferences', {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` 
-        },
-        body: JSON.stringify(prefs),
-      });
-      const data = await res.json();
+      const res = await fetch(
+        apiUrl('/api/users/preferences'),
+        {
+          method: 'POST',
+
+          headers: {
+            'Content-Type':
+              'application/json',
+
+            Authorization:
+              `Bearer ${token}`
+          },
+
+          body: JSON.stringify(prefs)
+        }
+      );
+
+      const data =
+        await res.json();
+
       setPreferences(data);
+
     } catch (err) {
-      console.error('Failed updating preferences:', err);
+      console.error(
+        'Failed updating preferences:',
+        err
+      );
     }
   };
 
-  // Trips Operations
+  // ============================================================
+  // TRIPS
+  // ============================================================
+
   const fetchTrips = async () => {
     if (!token) return;
-    const res = await fetch('/api/trips', { headers: { 'Authorization': `Bearer ${token}` } });
-    if (res.ok) setTrips(await res.json());
+
+    const res = await fetch(
+      apiUrl('/api/trips'),
+      {
+        headers: {
+          Authorization:
+            `Bearer ${token}`
+        }
+      }
+    );
+
+    if (res.ok) {
+      setTrips(
+        await res.json()
+      );
+    }
   };
 
-  const createTrip = async (destinationId: string, title: string, startDate: string, endDate: string) => {
+  const createTrip = async (
+    destinationId: string,
+    title: string,
+    startDate: string,
+    endDate: string
+  ) => {
     if (!token) return null;
-    const res = await fetch('/api/trips', {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({ destinationId, title, startDate, endDate }),
-    });
-    const data = await res.json();
+
+    const res = await fetch(
+      apiUrl('/api/trips'),
+      {
+        method: 'POST',
+
+        headers: {
+          'Content-Type':
+            'application/json',
+
+          Authorization:
+            `Bearer ${token}`
+        },
+
+        body: JSON.stringify({
+          destinationId,
+          title,
+          startDate,
+          endDate
+        })
+      }
+    );
+
+    const data =
+      await res.json();
+
     if (res.ok) {
       await fetchTrips();
       await fetchNotifications();
     }
+
     return data;
   };
 
-  const deleteTrip = async (tripId: string) => {
+  const deleteTrip = async (
+    tripId: string
+  ) => {
     if (!token) return;
-    const res = await fetch(`/api/trips/${tripId}`, {
-      method: 'DELETE',
-      headers: { 'Authorization': `Bearer ${token}` },
-    });
+
+    const res = await fetch(
+      apiUrl(`/api/trips/${tripId}`),
+      {
+        method: 'DELETE',
+
+        headers: {
+          Authorization:
+            `Bearer ${token}`
+        }
+      }
+    );
+
     if (res.ok) {
-      setTrips(prev => prev.filter(t => t.id !== tripId));
+      setTrips(prev =>
+        prev.filter(
+          t => t.id !== tripId
+        )
+      );
     }
   };
 
-  const fetchTripItems = async (tripId: string): Promise<TripItem[]> => {
+  const fetchTripItems = async (
+    tripId: string
+  ): Promise<TripItem[]> => {
     if (!token) return [];
-    const res = await fetch(`/api/trips/${tripId}/items`, { headers: { 'Authorization': `Bearer ${token}` } });
-    return res.ok ? await res.json() : [];
+
+    const res = await fetch(
+      apiUrl(
+        `/api/trips/${tripId}/items`
+      ),
+      {
+        headers: {
+          Authorization:
+            `Bearer ${token}`
+        }
+      }
+    );
+
+    return res.ok
+      ? await res.json()
+      : [];
   };
 
-  const addTripItem = async (tripId: string, item: Omit<TripItem, 'id' | 'tripId' | 'completed'>) => {
+  const addTripItem = async (
+    tripId: string,
+    item: Omit<
+      TripItem,
+      'id' | 'tripId' | 'completed'
+    >
+  ) => {
     if (!token) return null;
-    const res = await fetch(`/api/trips/${tripId}/items`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify(item),
-    });
-    return res.ok ? await res.json() : null;
+
+    const res = await fetch(
+      apiUrl(
+        `/api/trips/${tripId}/items`
+      ),
+      {
+        method: 'POST',
+
+        headers: {
+          'Content-Type':
+            'application/json',
+
+          Authorization:
+            `Bearer ${token}`
+        },
+
+        body: JSON.stringify(item)
+      }
+    );
+
+    return res.ok
+      ? await res.json()
+      : null;
   };
 
-  const deleteTripItem = async (itemId: string) => {
+  const deleteTripItem = async (
+    itemId: string
+  ) => {
     if (!token) return;
-    await fetch(`/api/trips/items/${itemId}`, {
-      method: 'DELETE',
-      headers: { 'Authorization': `Bearer ${token}` },
-    });
+
+    await fetch(
+      apiUrl(
+        `/api/trips/items/${itemId}`
+      ),
+      {
+        method: 'DELETE',
+
+        headers: {
+          Authorization:
+            `Bearer ${token}`
+        }
+      }
+    );
   };
 
-  const toggleTripItem = async (itemId: string) => {
+  const toggleTripItem = async (
+    itemId: string
+  ) => {
     if (!token) return;
-    await fetch(`/api/trips/items/${itemId}/toggle`, {
-      method: 'PATCH',
-      headers: { 'Authorization': `Bearer ${token}` },
-    });
+
+    await fetch(
+      apiUrl(
+        `/api/trips/items/${itemId}/toggle`
+      ),
+      {
+        method: 'PATCH',
+
+        headers: {
+          Authorization:
+            `Bearer ${token}`
+        }
+      }
+    );
   };
 
-  const generateAIItinerary = async (destinationId: string, startDate: string, endDate: string, style: string) => {
+  const generateAIItinerary = async (
+    destinationId: string,
+    startDate: string,
+    endDate: string,
+    style: string
+  ) => {
     if (!token) return null;
-    const res = await fetch('/api/ai/generate-itinerary', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({ destinationId, startDate, endDate, style }),
-    });
-    const data = await res.json();
+
+    const res = await fetch(
+      apiUrl('/api/ai/generate-itinerary'),
+      {
+        method: 'POST',
+
+        headers: {
+          'Content-Type':
+            'application/json',
+
+          Authorization:
+            `Bearer ${token}`
+        },
+
+        body: JSON.stringify({
+          destinationId,
+          startDate,
+          endDate,
+          style
+        })
+      }
+    );
+
+    const data =
+      await res.json();
+
     if (res.ok) {
       await fetchTrips();
       await fetchNotifications();
     }
+
     return data;
   };
 
-  // Bookings Operations
+  // ============================================================
+  // BOOKINGS
+  // ============================================================
+
   const fetchBookings = async () => {
     if (!token) return;
-    const res = await fetch('/api/bookings', { headers: { 'Authorization': `Bearer ${token}` } });
-    if (res.ok) setBookings(await res.json());
+
+    const res = await fetch(
+      apiUrl('/api/bookings'),
+      {
+        headers: {
+          Authorization:
+            `Bearer ${token}`
+        }
+      }
+    );
+
+    if (res.ok) {
+      setBookings(
+        await res.json()
+      );
+    }
   };
 
-  const createBooking = async (booking: Omit<Booking, 'id' | 'userId' | 'status'>) => {
+  const createBooking = async (
+    booking: Omit<
+      Booking,
+      'id' | 'userId' | 'status'
+    >
+  ) => {
     if (!token) return null;
-    const res = await fetch('/api/bookings', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify(booking),
-    });
+
+    const res = await fetch(
+      apiUrl('/api/bookings'),
+      {
+        method: 'POST',
+
+        headers: {
+          'Content-Type':
+            'application/json',
+
+          Authorization:
+            `Bearer ${token}`
+        },
+
+        body: JSON.stringify(booking)
+      }
+    );
+
     if (res.ok) {
       await fetchBookings();
       await fetchNotifications();
+
       return await res.json();
     }
+
     return null;
   };
 
-  const cancelBooking = async (bookingId: string) => {
+  const cancelBooking = async (
+    bookingId: string
+  ) => {
     if (!token) return;
-    const res = await fetch(`/api/bookings/${bookingId}/status`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({ status: 'cancelled' }),
-    });
+
+    const res = await fetch(
+      apiUrl(
+        `/api/bookings/${bookingId}/status`
+      ),
+      {
+        method: 'PATCH',
+
+        headers: {
+          'Content-Type':
+            'application/json',
+
+          Authorization:
+            `Bearer ${token}`
+        },
+
+        body: JSON.stringify({
+          status: 'cancelled'
+        })
+      }
+    );
+
     if (res.ok) {
       await fetchBookings();
     }
   };
 
-  // Saved Places
+  // ============================================================
+  // SAVED PLACES
+  // ============================================================
+
   const fetchSaved = async () => {
     if (!token) return;
-    const res = await fetch('/api/saved', { headers: { 'Authorization': `Bearer ${token}` } });
-    if (res.ok) setSavedPlaces(await res.json());
+
+    const res = await fetch(
+      apiUrl('/api/saved'),
+      {
+        headers: {
+          Authorization:
+            `Bearer ${token}`
+        }
+      }
+    );
+
+    if (res.ok) {
+      setSavedPlaces(
+        await res.json()
+      );
+    }
   };
 
-  const toggleSave = async (placeId: string, type: 'destination' | 'hotel' | 'restaurant' | 'attraction') => {
+  const toggleSave = async (
+    placeId: string,
+    type:
+      | 'destination'
+      | 'hotel'
+      | 'restaurant'
+      | 'attraction'
+  ) => {
     if (!token) {
-      alert('Please log in to save places to your library.');
+      alert(
+        'Please log in to save places to your library.'
+      );
       return;
     }
-    const res = await fetch('/api/saved', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({ placeId, type }),
-    });
+
+    const res = await fetch(
+      apiUrl('/api/saved'),
+      {
+        method: 'POST',
+
+        headers: {
+          'Content-Type':
+            'application/json',
+
+          Authorization:
+            `Bearer ${token}`
+        },
+
+        body: JSON.stringify({
+          placeId,
+          type
+        })
+      }
+    );
+
     if (res.ok) {
       await fetchSaved();
     }
   };
 
-  // Notifications
+  // ============================================================
+  // NOTIFICATIONS
+  // ============================================================
+
   const fetchNotifications = async () => {
     if (!token) return;
-    const res = await fetch('/api/notifications', { headers: { 'Authorization': `Bearer ${token}` } });
-    if (res.ok) setNotifications(await res.json());
+
+    const res = await fetch(
+      apiUrl('/api/notifications'),
+      {
+        headers: {
+          Authorization:
+            `Bearer ${token}`
+        }
+      }
+    );
+
+    if (res.ok) {
+      setNotifications(
+        await res.json()
+      );
+    }
   };
 
-  const markAsRead = async (notifId: string) => {
+  const markAsRead = async (
+    notifId: string
+  ) => {
     if (!token) return;
-    const res = await fetch(`/api/notifications/${notifId}/read`, {
-      method: 'PATCH',
-      headers: { 'Authorization': `Bearer ${token}` },
-    });
+
+    const res = await fetch(
+      apiUrl(
+        `/api/notifications/${notifId}/read`
+      ),
+      {
+        method: 'PATCH',
+
+        headers: {
+          Authorization:
+            `Bearer ${token}`
+        }
+      }
+    );
+
     if (res.ok) {
-      setNotifications(prev => prev.map(n => n.id === notifId ? { ...n, read: true } : n));
+      setNotifications(prev =>
+        prev.map(n =>
+          n.id === notifId
+            ? {
+                ...n,
+                read: true
+              }
+            : n
+        )
+      );
     }
   };
 
   const markAllRead = async () => {
     if (!token) return;
-    const res = await fetch('/api/notifications/read-all', {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${token}` },
-    });
+
+    const res = await fetch(
+      apiUrl(
+        '/api/notifications/read-all'
+      ),
+      {
+        method: 'POST',
+
+        headers: {
+          Authorization:
+            `Bearer ${token}`
+        }
+      }
+    );
+
     if (res.ok) {
-      setNotifications(prev => prev.map(n => ({ ...n, read: true })));
+      setNotifications(prev =>
+        prev.map(n => ({
+          ...n,
+          read: true
+        }))
+      );
     }
   };
 
-  // Expenses Operations
-  const fetchExpenses = async (tripId?: string): Promise<Expense[]> => {
+  // ============================================================
+  // EXPENSES
+  // ============================================================
+
+  const fetchExpenses = async (
+    tripId?: string
+  ): Promise<Expense[]> => {
     if (!token) return [];
-    const url = tripId ? `/api/expenses?tripId=${tripId}` : '/api/expenses';
-    const res = await fetch(url, { headers: { 'Authorization': `Bearer ${token}` } });
+
+    const url = tripId
+      ? `/api/expenses?tripId=${tripId}`
+      : '/api/expenses';
+
+    const res = await fetch(
+      apiUrl(url),
+      {
+        headers: {
+          Authorization:
+            `Bearer ${token}`
+        }
+      }
+    );
+
     if (res.ok) {
-      const data = await res.json();
-      if (!tripId) setExpenses(data);
+      const data =
+        await res.json();
+
+      if (!tripId) {
+        setExpenses(data);
+      }
+
       return data;
     }
+
     return [];
   };
 
-  const addExpense = async (expense: Omit<Expense, 'id' | 'userId'>) => {
+  const addExpense = async (
+    expense: Omit<
+      Expense,
+      'id' | 'userId'
+    >
+  ) => {
     if (!token) return null;
-    const res = await fetch('/api/expenses', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify(expense),
-    });
+
+    const res = await fetch(
+      apiUrl('/api/expenses'),
+      {
+        method: 'POST',
+
+        headers: {
+          'Content-Type':
+            'application/json',
+
+          Authorization:
+            `Bearer ${token}`
+        },
+
+        body: JSON.stringify(expense)
+      }
+    );
+
     if (res.ok) {
-      const newExp = await res.json();
-      setExpenses(prev => [...prev, newExp]);
+      const newExp =
+        await res.json();
+
+      setExpenses(prev => [
+        ...prev,
+        newExp
+      ]);
+
       return newExp;
     }
+
     return null;
   };
 
-  const deleteExpense = async (expenseId: string) => {
+  const deleteExpense = async (
+    expenseId: string
+  ) => {
     if (!token) return;
-    const res = await fetch(`/api/expenses/${expenseId}`, {
-      method: 'DELETE',
-      headers: { 'Authorization': `Bearer ${token}` },
-    });
+
+    const res = await fetch(
+      apiUrl(
+        `/api/expenses/${expenseId}`
+      ),
+      {
+        method: 'DELETE',
+
+        headers: {
+          Authorization:
+            `Bearer ${token}`
+        }
+      }
+    );
+
     if (res.ok) {
-      setExpenses(prev => prev.filter(e => e.id !== expenseId));
+      setExpenses(prev =>
+        prev.filter(
+          e => e.id !== expenseId
+        )
+      );
     }
   };
 
-  // AI Chat Operations
-  const sendAIChat = async (message: string, conversationId?: string) => {
-    if (!token) return { text: 'Authentication is required.', conversationId: '' };
-    const res = await fetch('/api/ai/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({ message, conversationId }),
-    });
+  // ============================================================
+  // AI CHAT
+  // ============================================================
+
+  const sendAIChat = async (
+    message: string,
+    conversationId?: string
+  ) => {
+    if (!token) {
+      return {
+        text: 'Authentication is required.',
+        conversationId: ''
+      };
+    }
+
+    const res = await fetch(
+      apiUrl('/api/ai/chat'),
+      {
+        method: 'POST',
+
+        headers: {
+          'Content-Type':
+            'application/json',
+
+          Authorization:
+            `Bearer ${token}`
+        },
+
+        body: JSON.stringify({
+          message,
+          conversationId
+        })
+      }
+    );
+
     if (res.ok) {
       return await res.json();
-    } else {
-      throw new Error('AI Chat connection failed.');
     }
+
+    throw new Error(
+      'AI Chat connection failed.'
+    );
   };
 
-  const getAIConversations = async (): Promise<AIConversation[]> => {
-    if (!token) return [];
-    const res = await fetch('/api/ai/conversations', { headers: { 'Authorization': `Bearer ${token}` } });
-    return res.ok ? await res.json() : [];
-  };
+  const getAIConversations =
+    async (): Promise<
+      AIConversation[]
+    > => {
+      if (!token) return [];
+
+      const res = await fetch(
+        apiUrl(
+          '/api/ai/conversations'
+        ),
+        {
+          headers: {
+            Authorization:
+              `Bearer ${token}`
+          }
+        }
+      );
+
+      return res.ok
+        ? await res.json()
+        : [];
+    };
+
+  // ============================================================
+  // PROVIDER
+  // ============================================================
 
   return (
-    <AppContext.Provider value={{
-      user, token, preferences, destinations, hotels, restaurants, attractions,
-      trips, bookings, savedPlaces, notifications, expenses, loading,
-      activeTab, activeMode, searchQuery, theme,
-      setActiveTab, setActiveMode, setSearchQuery, toggleTheme,
-      register, login, logout, updatePrefs,
-      fetchTrips, createTrip, deleteTrip, fetchTripItems, addTripItem, deleteTripItem, toggleTripItem, generateAIItinerary,
-      fetchBookings, createBooking, cancelBooking,
-      fetchSaved, toggleSave,
-      fetchNotifications, markAsRead, markAllRead,
-      fetchExpenses, addExpense, deleteExpense,
-      sendAIChat, getAIConversations
-    }}>
+    <AppContext.Provider
+      value={{
+        user,
+        token,
+        preferences,
+        destinations,
+        hotels,
+        restaurants,
+        attractions,
+        trips,
+        bookings,
+        savedPlaces,
+        notifications,
+        expenses,
+        loading,
+
+        activeTab,
+        activeMode,
+        searchQuery,
+        theme,
+
+        setActiveTab,
+        setActiveMode,
+        setSearchQuery,
+        toggleTheme,
+
+        register,
+        login,
+        logout,
+        updatePrefs,
+
+        fetchTrips,
+        createTrip,
+        deleteTrip,
+        fetchTripItems,
+        addTripItem,
+        deleteTripItem,
+        toggleTripItem,
+        generateAIItinerary,
+
+        fetchBookings,
+        createBooking,
+        cancelBooking,
+
+        fetchSaved,
+        toggleSave,
+
+        fetchNotifications,
+        markAsRead,
+        markAllRead,
+
+        fetchExpenses,
+        addExpense,
+        deleteExpense,
+
+        sendAIChat,
+        getAIConversations
+      }}
+    >
       {children}
     </AppContext.Provider>
   );
 }
 
+// ============================================================
+// CUSTOM HOOK
+// ============================================================
+
 export function useApp() {
-  const context = useContext(AppContext);
-  if (!context) throw new Error('useApp must be used inside an AppProvider');
+  const context =
+    useContext(AppContext);
+
+  if (!context) {
+    throw new Error(
+      'useApp must be used inside an AppProvider'
+    );
+  }
+
   return context;
 }
