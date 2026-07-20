@@ -1,45 +1,43 @@
-import express from 'express';
-import path from 'path';
-import { createServer as createViteServer } from 'vite';
-import apiRouter from './routes/index.js';
+import express from "express";
+import dotenv from "dotenv";
+import apiRouter from "./routes/index.js";
+import cors from "cors";
 
-// Load environment variables
-import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
 
-// Body parser
+// // Middleware
+// app.use(express.json());
+
+// // API routes
+// app.use("/api", apiRouter);
+
+
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://viatora-travel-portal.vercel.app/"
+  ],
+  credentials: true
+}));
+
 app.use(express.json());
 
-// Mount the unified API router
-app.use('/api', apiRouter);
+app.use("/api", apiRouter);
 
-// ---------------- VITE DEV SERVER & PRODUCTION HANDLING ----------------
 
-async function startServer() {
-  if (process.env.NODE_ENV !== "production") {
-    // Development Mode with Vite Middleware
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: "spa",
-    });
-    app.use(vite.middlewares);
-    console.log("Vite development middleware mounted successfully.");
-  } else {
-    // Production Mode serving static compiled files
-    const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
-    });
-    console.log("Serving production build from dist.");
-  }
-
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Viatora Server is live on http://localhost:${PORT}`);
+// Health check
+app.get("/", (_req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Viatora Backend API is running",
   });
-}
+});
 
-startServer();
+// Use hosting-provided PORT
+const PORT = Number(process.env.PORT) || 3000;
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Viatora Backend running on port ${PORT}`);
+});
