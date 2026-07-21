@@ -14,21 +14,13 @@ import {
   AIConversation
 } from '../types';
 
-interface ImportMetaEnv {
-  readonly VITE_API_URL?: string;
-}
-
-declare global {
-  interface ImportMeta {
-    readonly env: ImportMetaEnv;
-  }
-}
+import { api } from '../services/api';
 
 // ============================================================
 // API CONFIGURATION
 // ============================================================
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API_URL = (import.meta.env as { readonly VITE_API_URL?: string }).VITE_API_URL || 'http://localhost:3000';
 
 // Helper function to build API URLs
 const apiUrl = (endpoint: string) => `${API_URL}${endpoint}`;
@@ -287,178 +279,174 @@ export function AppProvider({
     );
   };
 
-  // ============================================================
-  // FETCH STATIC DIRECTORY DATA
-  // ============================================================
 
-  useEffect(() => {
-    async function initData() {
-      try {
-        const [
-          destRes,
-          hotelRes,
-          restRes,
-          attrRes
-        ] = await Promise.all([
-          fetch(apiUrl('/api/destinations')),
-          fetch(apiUrl('/api/hotels')),
-          fetch(apiUrl('/api/restaurants')),
-          fetch(apiUrl('/api/attractions'))
-        ]);
+ // ============================================================
+// FETCH STATIC DIRECTORY DATA
+// ============================================================
 
-        // Check if API responses are successful
-        if (
-          !destRes.ok ||
-          !hotelRes.ok ||
-          !restRes.ok ||
-          !attrRes.ok
-        ) {
-          throw new Error(
-            'Failed to fetch one or more directory endpoints'
-          );
-        }
+useEffect(() => {
+  async function initData() {
+    try {
+      const [
+        destData,
+        hotelData,
+        restData,
+        attrData
+      ] = await Promise.all([
+        api.get<Destination[]>('/api/destinations'),
+        api.get<Hotel[]>('/api/hotels'),
+        api.get<Restaurant[]>('/api/restaurants'),
+        api.get<Attraction[]>('/api/attractions')
+      ]);
 
-        const [
-          destData,
-          hotelData,
-          restData,
-          attrData
-        ] = await Promise.all([
-          destRes.json(),
-          hotelRes.json(),
-          restRes.json(),
-          attrRes.json()
-        ]);
+      setDestinations(
+        Array.isArray(destData) ? destData : []
+      );
 
-        setDestinations(destData || []);
-        setHotels(hotelData || []);
-        setRestaurants(restData || []);
-        setAttractions(attrData || []);
+      setHotels(
+        Array.isArray(hotelData) ? hotelData : []
+      );
 
-      } catch (err) {
-        console.error(
-          'Error fetching baseline directories:',
-          err
-        );
-      } finally {
-        setLoading(false);
-      }
+      setRestaurants(
+        Array.isArray(restData) ? restData : []
+      );
+
+      setAttractions(
+        Array.isArray(attrData) ? attrData : []
+      );
+
+    } catch (error) {
+      console.error(
+        'Error fetching directory data:',
+        error
+      );
+    } finally {
+      setLoading(false);
     }
+  }
 
-    initData();
-  }, []);
+  initData();
+}, []);
 
   // ============================================================
-  // FETCH USER DATA WHEN TOKEN CHANGES
-  // ============================================================
+// FETCH USER DATA WHEN TOKEN CHANGES
+// ============================================================
 
-  useEffect(() => {
-    if (!token) {
-      setUser(null);
-      setPreferences(null);
-      setTrips([]);
-      setBookings([]);
-      setSavedPlaces([]);
-      setNotifications([]);
-      setExpenses([]);
-      return;
+useEffect(() => {
+  if (!token) {
+    setUser(null);
+    setPreferences(null);
+    setTrips([]);
+    setBookings([]);
+    setSavedPlaces([]);
+    setNotifications([]);
+    setExpenses([]);
+
+    return;
+  }
+
+  async function loadUserData() {
+    try {
+      // ========================================================
+      // CURRENT USER
+      // ========================================================
+
+      const meData = await api.get<{
+        user: User;
+      }>('/api/auth/me', token);
+
+      setUser(meData.user);
+
+      // ========================================================
+      // USER DATA
+      // ========================================================
+
+      const [
+        prefData,
+        tripsData,
+        bookingsData,
+        savedData,
+        notificationsData,
+        expensesData
+      ] = await Promise.all([
+        api.get<UserPreferences>(
+          '/api/users/preferences',
+          token
+        ),
+
+        api.get<Trip[]>(
+          '/api/trips',
+          token
+        ),
+
+        api.get<Booking[]>(
+          '/api/bookings',
+          token
+        ),
+
+        api.get<any[]>(
+          '/api/saved',
+          token
+        ),
+
+        api.get<Notification[]>(
+          '/api/notifications',
+          token
+        ),
+
+        api.get<Expense[]>(
+          '/api/expenses',
+          token
+        )
+      ]);
+
+      // ========================================================
+      // UPDATE STATE
+      // ========================================================
+
+      setPreferences(prefData || null);
+
+      setTrips(
+        Array.isArray(tripsData)
+          ? tripsData
+          : []
+      );
+
+      setBookings(
+        Array.isArray(bookingsData)
+          ? bookingsData
+          : []
+      );
+
+      setSavedPlaces(
+        Array.isArray(savedData)
+          ? savedData
+          : []
+      );
+
+      setNotifications(
+        Array.isArray(notificationsData)
+          ? notificationsData
+          : []
+      );
+
+      setExpenses(
+        Array.isArray(expensesData)
+          ? expensesData
+          : []
+      );
+
+    } catch (error) {
+      console.error(
+        'Failed loading user data:',
+        error
+      );
     }
+  }
 
-    async function loadUserData() {
-      const headers = {
-        Authorization: `Bearer ${token}`
-      };
+  loadUserData();
 
-      try {
-        // Current user profile
-        const meRes = await fetch(
-          apiUrl('/api/auth/me'),
-          { headers }
-        );
-
-        if (!meRes.ok) {
-          logout();
-          return;
-        }
-
-        const meData =
-          await meRes.json();
-
-        setUser(meData.user);
-
-        // Fetch user-specific data
-        const [
-          prefRes,
-          tripsRes,
-          bookRes,
-          savedRes,
-          notifRes,
-          expRes
-        ] = await Promise.all([
-          fetch(
-            apiUrl('/api/users/preferences'),
-            { headers }
-          ),
-
-          fetch(
-            apiUrl('/api/trips'),
-            { headers }
-          ),
-
-          fetch(
-            apiUrl('/api/bookings'),
-            { headers }
-          ),
-
-          fetch(
-            apiUrl('/api/saved'),
-            { headers }
-          ),
-
-          fetch(
-            apiUrl('/api/notifications'),
-            { headers }
-          ),
-
-          fetch(
-            apiUrl('/api/expenses'),
-            { headers }
-          )
-        ]);
-
-        const [
-          prefData,
-          tripsData,
-          bookData,
-          savedData,
-          notifData,
-          expData
-        ] = await Promise.all([
-          prefRes.json(),
-          tripsRes.json(),
-          bookRes.json(),
-          savedRes.json(),
-          notifRes.json(),
-          expRes.json()
-        ]);
-
-        setPreferences(prefData);
-        setTrips(tripsData || []);
-        setBookings(bookData || []);
-        setSavedPlaces(savedData || []);
-        setNotifications(notifData || []);
-        setExpenses(expData || []);
-
-      } catch (err) {
-        console.error(
-          'Failed loading user sessions:',
-          err
-        );
-      }
-    }
-
-    loadUserData();
-  }, [token]);
+}, [token]);
 
   // ============================================================
   // AUTH OPERATIONS
@@ -618,24 +606,24 @@ export function AppProvider({
   // ============================================================
 
   const fetchTrips = async () => {
-    if (!token) return;
+  if (!token) return;
 
-    const res = await fetch(
-      apiUrl('/api/trips'),
-      {
-        headers: {
-          Authorization:
-            `Bearer ${token}`
-        }
-      }
-    );
-
-    if (res.ok) {
-      setTrips(
-        await res.json()
+  try {
+    const data =
+      await api.get<Trip[]>(
+        '/api/trips',
+        token
       );
-    }
-  };
+
+    setTrips(data);
+
+  } catch (error) {
+    console.error(
+      'Failed to fetch trips:',
+      error
+    );
+  }
+};
 
   const createTrip = async (
     destinationId: string,
