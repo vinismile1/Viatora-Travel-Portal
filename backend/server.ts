@@ -8,44 +8,16 @@ dotenv.config();
 const app = express();
 
 // ============================================================
-// CORS CONFIGURATION
+// CORS
 // ============================================================
-
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://viatora-travel-portal.vercel.app",
-];
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin
-      // e.g. Postman, server-to-server requests
-      if (!origin) {
-        return callback(null, true);
-      }
-
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-
-      return callback(
-        new Error(`CORS blocked for origin: ${origin}`)
-      );
-    },
+    origin: [
+      "http://localhost:5173",
+      "https://viatora-travel-portal.vercel.app",
+    ],
     credentials: true,
-    methods: [
-      "GET",
-      "POST",
-      "PUT",
-      "PATCH",
-      "DELETE",
-      "OPTIONS",
-    ],
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-    ],
   })
 );
 
@@ -79,7 +51,5 @@ app.get("/", (_req, res) => {
 const PORT = Number(process.env.PORT) || 3000;
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(
-    `Viatora Backend running on port ${PORT}`
-  );
+  console.log(`Viatora Backend running on port ${PORT}`);
 });
